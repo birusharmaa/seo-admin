@@ -7,7 +7,7 @@ use App\Models\Enquiry_model;
 
 class SettingsController extends BaseController
 {
-
+    Protected $session_check;
     public function __construct()
     {
         $request = \Config\Services::request();
@@ -17,11 +17,15 @@ class SettingsController extends BaseController
         $model = new Enquiry_model();
         $this->enquiry = $model;
         helper("general");
+       
+        if(!$this->session->has('login_user')){
+            echo view('login');
+            exit;
+        }
     }
 
     public function index()
     {   
-        
         $model = new Users_model();
         if($this->session->has('login_user')){
             $user_data = $this->session->get('login_user');
@@ -49,8 +53,8 @@ class SettingsController extends BaseController
         return view('Dashboard/profile',$data);
     }
 
-    public function dashboard(){
-       
+    public function dashboard(){        
+
         $model = new Users_model();
         if($this->session->has('login_user')){
             $user_data = $this->session->get('login_user');

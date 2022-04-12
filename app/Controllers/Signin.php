@@ -1,22 +1,26 @@
 <?php
 
 namespace App\Controllers;
+use App\Libraries\Session_check;
+use App\Models\Users_model;
 
 class Signin extends AppController
 {
 
     private $signin_validation_errors;
 
-    function __construct()
-    {
+    function __construct(){
+        $this->user_model = new Users_model();
+        $this->session_check = new Session_check();
+
         parent::__construct();
         $this->signin_validation_errors = array();
-        helper('email');
     }
 
     function index()
-    {
-        if ($this->Users_model->login_user_id()) {
+    {        
+        
+        if ($this->user_model->login_user_id()) {
             app_redirect('dashboard');
         } else {
             $view_data["redirect"] = "";
@@ -93,8 +97,14 @@ class Signin extends AppController
         if ($this->signin_validation_errors) {
             $this->session->setFlashdata("signin_validation_errors", $this->signin_validation_errors);
         }
+
+        if($this->user_model->authenticate($email, $password)==="notEmail") {
+            $this->session->setFlashdata("login_error",'Email id is not registered. Please register!');           
+            echo json_encode(['message'=>'Email id is not registered. Please register!','status'=>false]);
+            exit;
+        }
         
-        if (!$this->Users_model->authenticate($email, $password)) {
+        if (!$this->user_model->authenticate($email, $password)) {
             //authentication failed
             // array_push($this->signin_validation_errors, app_lang("authentication_failed"));
             // $this->session->setFlashdata("signin_validation_errors", $this->signin_validation_errors);
@@ -108,7 +118,8 @@ class Signin extends AppController
     }
 
     public function sign_out(){
-        unset($_SESSION['login_user']);
+        $session = session();
+        $session->destroy();
         return redirect()->to(base_url());
     }
 
@@ -123,7 +134,7 @@ class Signin extends AppController
         $saved_id =  isset($_POST['saved_id']) ? $this->request->getPost("saved_id") : false;
 
 
-        $existing_user = $this->Users_model->is_email_exists($email);
+        $existing_user = $this->user_model->is_email_exists($email);
 
         //send reset password email if found account with this email
         if ($existing_user) {
@@ -170,7 +181,7 @@ class Signin extends AppController
     //send an OTP to users mobile with reset password OTP 
     function send_reset_password_mobile_otp()
     {
-        $user_data =  $this->Users_model->getUserInfo($_POST['email']);
+        $user_data =  $this->user_model->getUserInfo($_POST['email']);
         $mobile = $user_data->user_phone;       
            
         // $saved_id =  isset($_POST['saved_id']) ? $this->request->getPost("saved_id") : false;
@@ -178,7 +189,7 @@ class Signin extends AppController
         //     $this->Verification_model->delete_permanently($saved_id);
         // }
 
-        $existing_user = $this->Users_model->is_mobile_exists($mobile);
+        $existing_user = $this->user_model->is_mobile_exists($mobile);
         //send reset password email if found account with this email
         if ($existing_user) {       
            
@@ -233,7 +244,7 @@ class Signin extends AppController
         if ($valid_key) {
             $email = get_array_value($valid_key, "email");
 
-            if ($this->Users_model->is_email_exists($email)) {
+            if ($this->user_model->is_email_exists($email)) {
                 $view_data["key"] = clean_data($key);
                 $view_data["form_type"] = "new_password";
                 return $this->template->view('signin/index', $view_data);
@@ -262,10 +273,10 @@ class Signin extends AppController
         
         if ($valid_key) {
             $email = get_array_value($valid_key, "email");
-            $user = $this->Users_model->is_email_exists($email);
+            $user = $this->user_model->is_email_exists($email);
             $user_data = array("user_password" => MD5($password));
 
-            if ($user->id && $this->Users_model->updatePassword($user_data, $user->id)) {
+            if ($user->id && $this->user_model->updatePassword($user_data, $user->id)) {
                 //user can't reset password two times with the same code
                 $options = array("email" => $key, "type" => "reset_password");
                 $verification_info = $this->Verification_model->get_details($options)->getRow();

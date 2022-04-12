@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Libraries\Template;
+use App\Libraries\Session_check;
 use App\Libraries\Google;
 use \nelexa\PhpZip\ZipFile;
 
@@ -16,14 +17,12 @@ class AppController extends BaseController
 
     public function __construct()
     {
-
-        
-
         //main template to make frame of this app
         $this->template = new Template();
+        
         //load helpers
-        helper(array('url', 'file', 'form', 'language', 'general','plugin', 'date_time', 'app_files', 'widget', 'activity_logs', 'currency'));
-
+        helper(array('session_check', 'url', 'file', 'form', 'language', 'general','plugin', 'date_time', 'app_files', 'widget', 'activity_logs', 'currency'));
+        
         //models
         $models_array = $this->get_models_array();
         foreach ($models_array as $model) {

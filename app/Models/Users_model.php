@@ -21,19 +21,15 @@ class Users_model extends Crud_model
         if ($email) {
             $email = $this->db->escapeString($email);
         }
-        $password = md5($password);
-            $sql = "select * from $this->table where user_email= '$email' and user_password = '$password' and user_status=1";       
-            $result = $db->query($sql);            
-        if (count($result->getResult()) !== 1) {
-            return false;
+        $sql = "select * from $this->table where user_email= '$email' ";       
+        $result = $db->query($sql);            
+        if (count($result->getResult()) < 1) {
+            return 'notEmail';
         }
-
         $user_info = $result->getRow();
-       
-        //there has two password encryption method for legacy (md5) compatibility
         //check if anyone of them is correct
-        if ($user_info->user_password === $password) {
-            //if ($this->_client_can_login($user_info) == false) {
+        if(password_verify($password, $user_info->user_password)) {
+            if($user_info->status == '1'){
                 $session = \Config\Services::session();
                 $newdata = [
                     'user_id' =>  $user_info->id,
@@ -45,7 +41,9 @@ class Users_model extends Crud_model
                 ];                 
                 $session->set('login_user', $newdata);  
                 return true;
-          //  }
+            }else{
+                return 'inactive';
+            }
         }
     }
 

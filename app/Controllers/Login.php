@@ -1,12 +1,16 @@
 <?php
 
 namespace App\Controllers;
-
-class Login extends BaseController
+class Login extends AppController
 {
     public function index()
     {
-        return view('login');
+        $session = session();
+        if(!$session->has('login_user')){
+            return view('login');
+        }else{
+            return redirect()->to(base_url().'/dashboard');
+        }
     }
 
     public function forget_password()

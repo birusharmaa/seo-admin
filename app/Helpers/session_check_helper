@@ -1,0 +1,10 @@
+<?php
+
+if (!function_exists('is_login_user')) {
+
+    function is_login_user() {
+        echo "ss";
+        exit;
+    }
+
+}
