@@ -108,8 +108,8 @@ class Signin extends AppController
             //authentication failed
             // array_push($this->signin_validation_errors, app_lang("authentication_failed"));
             // $this->session->setFlashdata("signin_validation_errors", $this->signin_validation_errors);
-            $this->session->setFlashdata("login_error",'Invalid Credential');           
-            echo json_encode(['message'=>'Invalid Credential','status'=>false]);
+            $this->session->setFlashdata("login_error",'Wrong password!');           
+            echo json_encode(['message'=>'Wrong password!','status'=>false]);
         }else{
              //authentication success
             echo json_encode(['path'=>'/dashboard','status'=>true,'message'=>'Login Successfully.']);
