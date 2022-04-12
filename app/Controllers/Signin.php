@@ -100,7 +100,7 @@ class Signin extends AppController
 
         if($this->user_model->authenticate($email, $password)==="notEmail") {
             $this->session->setFlashdata("login_error",'Email id is not registered. Please register!');           
-            echo json_encode(['message'=>'Email id is not registered. Please register!','status'=>false]);
+            echo json_encode(['message'=>'Email id is not registered. Please register!','status'=>false, 'email'=> true]);
             exit;
         }
         
@@ -109,7 +109,7 @@ class Signin extends AppController
             // array_push($this->signin_validation_errors, app_lang("authentication_failed"));
             // $this->session->setFlashdata("signin_validation_errors", $this->signin_validation_errors);
             $this->session->setFlashdata("login_error",'Wrong password!');           
-            echo json_encode(['message'=>'Wrong password!','status'=>false]);
+            echo json_encode(['message'=>'Wrong password!','status'=>false, 'password'=> true]);
         }else{
              //authentication success
             echo json_encode(['path'=>'/dashboard','status'=>true,'message'=>'Login Successfully.']);

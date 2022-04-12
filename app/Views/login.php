@@ -54,7 +54,7 @@
 													Signin to create, discover and connect with the global
 													community
 												</p>
-												<?php if($this->session->getFlashdata('login_error')) { ?>	
+												<?php if($this->session->getFlashdata('login_error')=="ssss") { ?>	
 													<div class="alert alert-danger" role="alert">
 														<?php echo $this->session->getFlashdata('login_error');?>	
 													</div>
@@ -123,13 +123,20 @@
 					success: function(response) {
 						response= JSON.parse(response);
 						if(response.status){
-							window.location.href='<?php echo base_url();?>'+response.path;
-							Notify.success(response.message);
+							window.location.href='<?php echo base_url();?>'+'/dashboard';
+							//Notify.success(response.message);
 						}else{	
-														
-							window.location.href='<?php echo base_url();?>';
-							Notify.failure(response.message);
-						}								
+							$(".validation").remove();				
+							//window.location.href='<?php echo base_url();?>';
+							if(response.email){
+								$("#email").parent().append('<span class="text-danger validation">'+response.message+'</span>');
+							}
+							else if(response.password){
+								$("#password").parent().append('<span class="text-danger validation">'+response.message+'</span>');
+							}else{
+								window.location.href='<?php echo base_url();?>';
+							}
+						}									
 					}            
 				});
             }
