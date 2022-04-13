@@ -104,7 +104,7 @@ $routes->get('/get-city/(:num)', 'GeneralSettingController::getActiveCityById/$1
 $routes->get('/get-locality/(:num)', 'GeneralSettingController::getActiveLocalityById/$1');
 $routes->get('/get-pincode/(:num)', 'GeneralSettingController::getActivePincodeById/$1');
 
-$routes->get('/plugins', 'Plugins::index');
+$routes->get('/plugins', 'Partners::index');
 $routes->get('/add-plugin', 'Plugins::add_plugin');
 $routes->get('/manage-plugins/(:num)', 'Plugins::manage_plugins/$1');
 $routes->post('/save-plugins', 'Plugins::save_plugins');
@@ -121,7 +121,6 @@ $routes->post('/buy-inventory', 'Inventory::save_buyInventory');
 $routes->get('/allInventory', 'Inventory::allInventory');
 
 $routes->get('/clients', 'ClientsController::index');
-$routes->post('/plugins', 'Partners::plugins');
 $routes->get('/seo', 'Partners::seo');
 $routes->get('/getclients', 'ClientsController::getclients',  ['filter' => 'authFilter']);
 $routes->get('/getanthorclients', 'ClientsController::getanthorclients', ['filter' => 'authFilter']);
@@ -130,6 +129,12 @@ $routes->put('/update_anther_client/(:num)', 'ClientsController::update_anther_c
 
 $routes->get('/partners-plugins', 'PartnersController::plugins');
 $routes->get('/partners-cms', 'PartnersController::cms');
+
+$routes->group('curl', function($routes){
+    $routes->get('get-all-partners', 'CurlController::getAllPartners');
+    $routes->post('change-partner-status/(:num)', 'CurlController::changePartnerStatus/$1');
+    $routes->post('add-partner', 'CurlController::addPartner');
+});
 
 
 

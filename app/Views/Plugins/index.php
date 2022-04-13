@@ -78,5 +78,4 @@
 
 <?= $this->section('script');?>
     <script src="<?= base_url('assets/js/pages/partners.js');?>"></script>
-    
 <?= $this->endSection();?>

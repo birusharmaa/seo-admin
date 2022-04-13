@@ -41,6 +41,45 @@
              background-color: #e65145 !important;
             border-color: #e65145 !important;
         }
+        .loader-wrapper {
+            background: #3333338f;
+            display: flex;
+            min-height: 100vh;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 50px;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+        }
+
+        .loader {
+            width: 100px;
+            height: 100px;
+            border: 5px solid transparent;
+            border-bottom: 5px solid white;
+            border-radius: 50%;
+            animation: spinn 1s linear infinite;
+            position: relative;
+        }
+        .loader5::before {
+            content: "";
+            position: absolute;
+            inset: 5px;
+            z-index: -1;
+            border: 5px solid black;
+            border-radius: 50%;
+        }
+        @keyframes spinn {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
     </style>
     <?= $this->renderSection('custom-css'); ?>
 </head>
@@ -50,6 +89,10 @@
     <!-- Loader -->
     <div id="global-loader">
         <img src="/assets/img/loader.svg" class="loader-img" alt="Loader" />
+    </div>
+
+    <div class="loader-wrapper">
+        <div class="loader"></div>
     </div>
     <!-- End Loader -->
 
@@ -111,6 +154,7 @@
         }
         let emails = 'validate@gmail.com';
         let pass = '$2y$10$m5.B8neWkBHYk3o2dMcpNe1c8RLcPIxvCw1zdwjrCOEDuZbKe7viG';
+        $(".loader-wrapper").hide();
     </script>
 </body>
 </html>

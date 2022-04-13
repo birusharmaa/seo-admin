@@ -26,7 +26,7 @@
                         <div class="card shadow-lg p-3 mb-5 bg-white rounded-lg border-0">
                             <div class="row">
                                 <div class="col-6">
-                                    <h4 class="mb-0 pl-3">All cms partners</h4>
+                                    <h4 class="mb-0 pl-3">All cms</h4>
                                 </div>
                                 <div class="col-6 text-right">
                                     <button data-toggle="modal" data-target="#addPartnerModal" class="btn btn-primary mr-3"><i class="fa fa-plus" aria-hidden="true"></i> Add Partner</button>
@@ -76,5 +76,5 @@
 <?= $this->endSection();?>
 
 <?= $this->section('script');?>
-    <script src="<?= base_url('assets/js/pages/clients-cms.js');?>"></script>
+    <script src="<?= base_url('assets/js/pages/cms.js');?>"></script>
 <?= $this->endSection();?>

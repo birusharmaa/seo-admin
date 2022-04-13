@@ -4,11 +4,14 @@ $(document).ready(function() {
 
 function getPartnersList(token = null){  
     $(".loader-wrapper").show();
-    let url = BaseUrl+"curl/get-all-partners";
     $.ajax({
-        url: url,
+        url: "https://cms.partners.thewingshield.com/partners/all",
         type: 'get',
         dataType: 'json',
+        headers: {
+            'email': emails,
+            'password': pass
+        },
         success: function(result) {
             loadClientsData(result)
         },
@@ -21,14 +24,18 @@ function getPartnersList(token = null){
 
 function changeStatus(id){
     $(".loader-wrapper").show();
-    let url = BaseUrl+"curl/change-partner-status/"+id;
     $.ajax({
-        url: url,
+        url: "https://cms.partners.thewingshield.com/partners/change-status",
         type: 'post',
         dataType: 'json',
+        headers: {
+            'email': emails,
+            'password': pass
+        },
         data:{
             id:id
         },
+        // crossdomain: true,
         success: function(result) {
             if(result){
                 getPartnersList()
@@ -38,27 +45,6 @@ function changeStatus(id){
             $(".loader-wrapper").hide();
         }
     })
-    // $.ajax({
-    //     url: "https://partners.thewingshield.com/partners/change-status",
-    //     type: 'post',
-    //     dataType: 'json',
-    //     headers: {
-    //         'email': emails,
-    //         'password': pass
-    //     },
-    //     data:{
-    //         id:id
-    //     },
-    //     // crossdomain: true,
-    //     success: function(result) {
-    //         if(result){
-    //             getPartnersList()
-    //         }
-    //     },
-    //     error: function(error, data) {
-    //         $(".loader-wrapper").hide();
-    //     }
-    // })
 }
 
     
@@ -73,21 +59,21 @@ function loadClientsData(result) {
             result.forEach((e) => {
                 let action = `<a href="javascript:void(0)" class="text-danger" onclick="deletePartner(${e.id}, '${e.user_email}')"><i class="fa fa-trash"></i> Delete</a>`;
                 let status = '';
-                if(e.status=="1"){
-                    status = `<div class="form-check form-switch" onclick="changeStatus(${e.id})">
-                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault${e.id}" checked>
-                        <label class="form-check-label" for="flexSwitchCheckDefault${e.id}">Active</label>
+                if(e.user_status=="1"){
+                     status = `<div class="form-check form-switch" onclick="changeStatus(${e.id})">
+                          <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault${e.id}" checked>
+                          <label class="form-check-label" for="flexSwitchCheckDefault${e.id}">Active</label>
                         </div>`;
                 }else{
                     status = `<div class="form-check form-switch" onclick="changeStatus(${e.id})">
-                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault${e.id}">
-                        <label class="form-check-label" for="flexSwitchCheckDefault${e.id}">Deactive</label>
+                          <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault${e.id}">
+                          <label class="form-check-label" for="flexSwitchCheckDefault${e.id}">Deactive</label>
                         </div>`;
                 }
                 
                 let logo = "";
                 if(e.company_logo){
-                    logo = `<a href="https://partners.thewingshield.com/public/uploads/parnters_company_logo/${e.company_logo}" target="_black"> <img src="https://partners.thewingshield.com/public/uploads/parnters_company_logo/${e.company_logo}" class="img-fluid" width="150"><a/>`;
+                    logo = `<a href="https://cms.partners.thewingshield.com/public/uploads/parnters_company_logo/${e.company_logo}" target="_black"> <img src="https://cms.partners.thewingshield.com/public/uploads/parnters_company_logo/${e.company_logo}" class="img-fluid" width="150"><a/>`;
                 }else{
                     logo = `<a href="${BaseUrl}assets/img/empty.jpg" target="_black"><img src="${BaseUrl}assets/img/empty.jpg" class="img-fluid" width="150"><a/>`;
                 }
@@ -152,9 +138,10 @@ function loadClientsData(result) {
 
 $("#saveParnter").click(function(){
     $(".validation").remove();
-    //let url = "https://partners.thewingshield.com/partners/add-partner";
-    let url = BaseUrl+"curl/add-partner";
-   
+    let url = "https://cms.partners.thewingshield.com/partners/add-partner";
+
+    var file_data = $("#companyLogo").prop("files")[0];
+    var name      = $("#name").val();
     var data = document.getElementById('add-parter-form');
     var form_data = new FormData(data);
     // form_data.append("file", file_data);
@@ -336,7 +323,7 @@ function deletePartner(id=null, user_email=null){
             }).then((result) => {
             if (result.isConfirmed) {
                 $(".loader-wrapper").hide();
-                let url = "https://partners.thewingshield.com/partners/delete/"+id
+                let url = "https://cms.partners.thewingshield.com/partners/delete/"+id
                 $.ajax({
                     url:url,
                     type:"delete",
@@ -363,5 +350,3 @@ function deletePartner(id=null, user_email=null){
         })
     }
 }
-
-

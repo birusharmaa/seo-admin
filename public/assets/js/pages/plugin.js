@@ -4,11 +4,14 @@ $(document).ready(function() {
 
 function getPartnersList(token = null){  
     $(".loader-wrapper").show();
-    let url = BaseUrl+"curl/get-all-partners";
     $.ajax({
-        url: url,
+        url: "https://partners.thewingshield.com/partners/all",
         type: 'get',
         dataType: 'json',
+        headers: {
+            'email': emails,
+            'password': pass
+        },
         success: function(result) {
             loadClientsData(result)
         },
@@ -21,14 +24,18 @@ function getPartnersList(token = null){
 
 function changeStatus(id){
     $(".loader-wrapper").show();
-    let url = BaseUrl+"curl/change-partner-status/"+id;
     $.ajax({
-        url: url,
+        url: "https://partners.thewingshield.com/partners/change-status",
         type: 'post',
         dataType: 'json',
+        headers: {
+            'email': emails,
+            'password': pass
+        },
         data:{
             id:id
         },
+        // crossdomain: true,
         success: function(result) {
             if(result){
                 getPartnersList()
@@ -38,27 +45,6 @@ function changeStatus(id){
             $(".loader-wrapper").hide();
         }
     })
-    // $.ajax({
-    //     url: "https://partners.thewingshield.com/partners/change-status",
-    //     type: 'post',
-    //     dataType: 'json',
-    //     headers: {
-    //         'email': emails,
-    //         'password': pass
-    //     },
-    //     data:{
-    //         id:id
-    //     },
-    //     // crossdomain: true,
-    //     success: function(result) {
-    //         if(result){
-    //             getPartnersList()
-    //         }
-    //     },
-    //     error: function(error, data) {
-    //         $(".loader-wrapper").hide();
-    //     }
-    // })
 }
 
     
@@ -152,9 +138,10 @@ function loadClientsData(result) {
 
 $("#saveParnter").click(function(){
     $(".validation").remove();
-    //let url = "https://partners.thewingshield.com/partners/add-partner";
-    let url = BaseUrl+"curl/add-partner";
-   
+    let url = "https://partners.thewingshield.com/partners/add-partner";
+
+    var file_data = $("#companyLogo").prop("files")[0];
+    var name      = $("#name").val();
     var data = document.getElementById('add-parter-form');
     var form_data = new FormData(data);
     // form_data.append("file", file_data);
