@@ -29,7 +29,7 @@
 			</ul>
 			<ul class="nav-sub">
 				<li class="nav-sub-item">
-					<a class="nav-sub-link" href="<?=base_url();?>/clients/client">CMS</a>
+					<a class="nav-sub-link" href="<?=base_url();?>/clients/all">CMS</a>
 				</li>
 			</ul>
 		</li>
@@ -48,7 +48,7 @@
 			</ul>
 			<ul class="nav-sub">
 				<li class="nav-sub-item">
-					<a class="nav-sub-link" href="<?=base_url();?>/partners/cms">CMS</a>
+					<a class="nav-sub-link" href="<?=base_url();?>/partners/plugins">CMS</a>
 				</li>
 			</ul>
 		</li>

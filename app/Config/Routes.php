@@ -134,6 +134,8 @@ $routes->group('curl', function($routes){
     $routes->post('add-partner', 'CurlController::addPartner');
     $routes->delete('delete-partner/(:num)', 'CurlController::deletePartner/$1');
     $routes->get('get-all-clients', 'CurlController::getAllClients');
+    $routes->post('change-client-status/(:num)', 'CurlController::changeClientStatus/$1');
+    
 });
 
 

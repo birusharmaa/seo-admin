@@ -1,8 +1,8 @@
 $(document).ready(function() {
-    getPartnersList();
+    getClientLists();
 });
 
-function getPartnersList(token = null){  
+function getClientLists(token = null){  
     $(".loader-wrapper").show();
     let url = BaseUrl+"curl/get-all-clients";
     $.ajax({
@@ -21,21 +21,14 @@ function getPartnersList(token = null){
 
 function changeStatus(id){
     $(".loader-wrapper").show();
+    let url = BaseUrl+"curl/change-client-status/"+id;
     $.ajax({
-        url: "https://partners.thewingshield.com/partners/change-status",
+        url: url,
         type: 'post',
         dataType: 'json',
-        headers: {
-            'email': emails,
-            'password': pass
-        },
-        data:{
-            id:id
-        },
-        // crossdomain: true,
         success: function(result) {
             if(result){
-                getPartnersList()
+                getClientLists()
             }
         },
         error: function(error, data) {
@@ -56,7 +49,7 @@ function loadClientsData(result) {
             result.forEach((e) => {
                 let action = `<a href="javascript:void(0)" class="text-danger" onclick="deletePartner(${e.id}, '${e.user_email}')"><i class="fa fa-trash"></i> Delete</a>`;
                 let status = '';
-                if(e.status=="1"){
+                if(e.user_status=="1"){
                     status = `<div class="form-check form-switch" onclick="changeStatus(${e.id})">
                         <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault${e.id}" checked>
                         <label class="form-check-label" for="flexSwitchCheckDefault${e.id}">Active</label>
@@ -160,7 +153,7 @@ $("#saveParnter").click(function(){
             Swal.fire("Success!", "Partner created successfully!", "success");
             $("#add-parter-form").trigger('reset');
             $('.close').trigger('click');
-            getPartnersList();
+            getClientLists();
         },
         error:function(error, exh){
             if(error.responseJSON.messages.comapnyAddress){
@@ -332,7 +325,7 @@ function deletePartner(id=null, user_email=null){
                     success:function(data){
                         if(data.status){
                             Swal.fire("Success!", data.message, "success");
-                            getPartnersList();
+                            getClientLists();
                         }else{
                             Swal.fire("Error!", data.message, "error");
                             $(".loader-wrapper").hide();
