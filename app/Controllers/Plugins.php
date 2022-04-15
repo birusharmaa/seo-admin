@@ -34,7 +34,9 @@ class Plugins extends BaseController
         $return['data'] = $this->model->getAll_plugin($user_data['user_id']);
         $return['color'] =  getThemeColor($user_data["user_id"]);        
         $return['title'] = 'All Plugins';  
-        return view('Plugins/index',$return);
+        $return['page'] = '/plugins/index';
+          
+        return view('plugins/index',$return);
     }
 
     public function add_plugin(){   

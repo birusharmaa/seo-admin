@@ -4,16 +4,13 @@ $(document).ready(function() {
 
 function getPartnersList(token = null){  
     $(".loader-wrapper").show();
+    let url = BaseUrl+"curl/get-all-clients";
     $.ajax({
-        url: "https://partners.thewingshield.com/partners/all",
+        url: url,
         type: 'get',
         dataType: 'json',
-        headers: {
-            'email': emails,
-            'password': pass
-        },
         success: function(result) {
-            loadClientsData(result)
+            loadClientsData(result);
         },
         error: function(error, data) {
             $(".loader-wrapper").hide();

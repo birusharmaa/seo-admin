@@ -34,9 +34,7 @@ class SettingsController extends BaseController
         $data['userInfo'] =  $userinfo;   
         $data['color'] =  getThemeColor($user_data["user_id"]);       
         $data['title'] = "Account Settings";  
-        
-
-        return view('Dashboard/settings',$data);
+        return view('dashboard/settings',$data);
     }
 
     public function profile()
@@ -65,8 +63,8 @@ class SettingsController extends BaseController
         $data['userInfo'] =  $userinfo; 
         $data['color'] =  getThemeColor($user_data["user_id"]);       
         $data['title'] = "Dashboard";
-        
-        return view('Dashboard/index',$data);
+        $data['page']  = '/dashboard/index.php';
+        return view('dashboard/index',$data);
     }
 
     public function save_general($id){

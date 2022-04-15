@@ -6,8 +6,7 @@ use App\Models\Enquiry_model;
 class Inbox extends BaseController
 {
 
-    public function __construct()
-    {
+    public function __construct(){
         $request = \Config\Services::request();
         $session = \Config\Services::session();
         $this->session = $session;
@@ -17,14 +16,14 @@ class Inbox extends BaseController
         helper("general");
     }
     
-    public function index()
-    {   
+    public function index(){   
         if($this->session->has('login_user')){
             $user_data = $this->session->get('login_user');
         }
         $data['data'] = $this->model->get_allEnquiry();
         $data['color'] =  getThemeColor($user_data["user_id"]);      
         $data['title'] = 'Inbox';
-        return view('Inbox/index', $data);
+        $data['page']  = '/inbox/index.php';
+        return view('inbox/index', $data);
     }
 }

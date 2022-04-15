@@ -120,22 +120,33 @@ $routes->get('/inventory', 'Inventory::index');
 $routes->post('/buy-inventory', 'Inventory::save_buyInventory');
 $routes->get('/allInventory', 'Inventory::allInventory');
 
-$routes->get('/clients', 'ClientsController::index');
 $routes->get('/seo', 'Partners::seo');
-$routes->get('/getclients', 'ClientsController::getclients',  ['filter' => 'authFilter']);
-$routes->get('/getanthorclients', 'ClientsController::getanthorclients', ['filter' => 'authFilter']);
-$routes->post('/insert_anther_client', 'ClientsController::insert_anther_client', ['filter' => 'authFilter']);
-$routes->put('/update_anther_client/(:num)', 'ClientsController::update_anther_client/$1', ['filter' => 'authFilter']);
+// $routes->get('/getclients', 'ClientsController::getclients',  ['filter' => 'authFilter']);
+// $routes->get('/getanthorclients', 'ClientsController::getanthorclients', ['filter' => 'authFilter']);
+// $routes->post('/insert_anther_client', 'ClientsController::insert_anther_client', ['filter' => 'authFilter']);
+// $routes->put('/update_anther_client/(:num)', 'ClientsController::update_anther_client/$1', ['filter' => 'authFilter']);
 
-$routes->get('/partners-plugins', 'PartnersController::plugins');
-$routes->get('/partners-cms', 'PartnersController::cms');
+
 
 $routes->group('curl', function($routes){
     $routes->get('get-all-partners', 'CurlController::getAllPartners');
     $routes->post('change-partner-status/(:num)', 'CurlController::changePartnerStatus/$1');
     $routes->post('add-partner', 'CurlController::addPartner');
+    $routes->delete('delete-partner/(:num)', 'CurlController::deletePartner/$1');
+    $routes->get('get-all-clients', 'CurlController::getAllClients');
 });
 
+
+
+$routes->group('clients', function($routes){
+    $routes->get('all', 'ClientsController::index');
+    $routes->get('client', 'ClientsController::client');
+});
+
+$routes->group('partners', function($routes){
+    $routes->get('plugins', 'PartnersController::plugins');
+    $routes->get('cms', 'PartnersController::cms');
+});
 
 
 /*

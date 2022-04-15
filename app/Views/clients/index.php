@@ -28,9 +28,9 @@
                                 <div class="col-6">
                                     <h4 class="mb-0 pl-3">All clients plugins</h4>
                                 </div>
-                                <div class="col-6 text-right">
+                                <!-- <div class="col-6 text-right">
                                     <button data-toggle="modal" data-target="#addPartnerModal" class="btn btn-primary mr-3"><i class="fa fa-plus" aria-hidden="true"></i> Add Partner</button>
-                                </div>
+                                </div> -->
                             </div>
                             
                             <div class="card-content">
@@ -72,8 +72,8 @@
             </div>
         </div>
     </section>
-    <?= $this->include('Plugins/modal') ?>
+    <?= $this->include('partners/modal') ?>
 <?= $this->endSection();?>
 <?= $this->section('script');?>
-    <script src="<?= base_url('assets/js/pages/plugins.js');?>"></script>
+    <script src="<?= base_url('assets/js/pages/clients.js');?>"></script>
 <?= $this->endSection(); ?>

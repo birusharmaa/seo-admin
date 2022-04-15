@@ -24,12 +24,12 @@
 			</a>
 			<ul class="nav-sub">
 				<li class="nav-sub-item">
-					<a class="nav-sub-link" href="<?=base_url();?>/plugins">Plugins</a>
+					<a class="nav-sub-link" href="<?=base_url();?>/clients/all">Plugins</a>
 				</li>
 			</ul>
 			<ul class="nav-sub">
 				<li class="nav-sub-item">
-					<a class="nav-sub-link" href="<?=base_url();?>/cms">CMS</a>
+					<a class="nav-sub-link" href="<?=base_url();?>/clients/client">CMS</a>
 				</li>
 			</ul>
 		</li>
@@ -43,12 +43,12 @@
 			</a>
 			<ul class="nav-sub">
 				<li class="nav-sub-item">
-					<a class="nav-sub-link" href="<?=base_url();?>/partners-plugins">Plugins</a>
+					<a class="nav-sub-link" href="<?=base_url();?>/partners/plugins">Plugins</a>
 				</li>
 			</ul>
 			<ul class="nav-sub">
 				<li class="nav-sub-item">
-					<a class="nav-sub-link" href="<?=base_url();?>/partners-cms">CMS</a>
+					<a class="nav-sub-link" href="<?=base_url();?>/partners/cms">CMS</a>
 				</li>
 			</ul>
 		</li>
@@ -67,7 +67,7 @@
 			</ul>
 		</li>
 		
-		<li class="nav-item">						
+		<li class="nav-item d-none">						
 			<a class="nav-link with-sub" href="#"><span class="shape1"></span>
 			<span class="shape2"></span><i class="ti-settings sidemenu-icon"></i>
 			<span class="sidemenu-label">General Settings</span><i class="angle fe fe-chevron-right"></i></a>

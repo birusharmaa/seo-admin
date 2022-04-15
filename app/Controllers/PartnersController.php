@@ -20,7 +20,8 @@ class PartnersController extends Security_Controller
         $data['color'] =  getThemeColor($user_data["user_id"]);   
         $data['title'] = 'Partner Plugins';
         $data['page_title'] = 'Partner Plugins';
-        return view('Plugins/index', $data);
+        $data['page'] = '/plugins/index';
+        return view('partners/index', $data);
     }
     
     public function cms(){
@@ -31,6 +32,7 @@ class PartnersController extends Security_Controller
         $data['color'] =  getThemeColor($user_data["user_id"]);  
         $data['title'] = 'Partner cms';
         $data['page_title'] = 'Partner CMS';
-        return view('Plugins/cms', $data);
+        $data['page'] = '/plugins/cms';
+        return view('partners/cms', $data);
     }
 }

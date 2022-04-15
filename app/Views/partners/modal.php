@@ -12,70 +12,70 @@
                     <div class="row">
                         <div class="col-4">
                             <div class="form-group">
-                                <label for="name" class="fw-bold">Name</label>
+                                <label for="name" class="fw-bold">Name<span class="text-danger"> *</span></label>
                                 <input type="text" class="form-control" id="name" name="name" placeholder="Enter name">
                             </div>
                         </div>
 
                         <div class="col-4">
                             <div class="form-group">
-                                <label class="fw-bold" for="email">Email</label>
+                                <label class="fw-bold" for="email">Email <span class="text-danger"> *</span></label>
                                 <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
                             </div>
                         </div>
 
                         <div class="col-4">
                             <div class="form-group">
-                                <label class="fw-bold" for="email">Phone</label>
+                                <label class="fw-bold" for="email">Phone <span class="text-danger"> *</span></label>
                                 <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter phone">
                             </div>
                         </div>
 
                         <div class="col-4">
                             <div class="form-group">
-                                <label class="fw-bold" for="password">Password</label>
+                                <label class="fw-bold" for="password">Password <span class="text-danger"> *</span></label>
                                 <input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
                             </div>
                         </div>
 
                         <div class="col-4">
                             <div class="form-group">
-                                <label class="fw-bold" for="confirmPassword">Confirm Password</label>
+                                <label class="fw-bold" for="confirmPassword">Confirm Password <span class="text-danger"> *</span></label>
                                 <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Enter confirm password">
                             </div>
                         </div>
 
                         <div class="col-4">
                             <div class="form-group">
-                                <label class="fw-bold" for="comapnyName">Company Name</label>
-                                <input type="text" class="form-control" id="comapnyName" name="comapnyName" placeholder="Enter compnay name">
+                                <label class="fw-bold" for="companyName">Company Name <span class="text-danger"> *</span></label>
+                                <input type="text" class="form-control" id="companyName" name="companyName" placeholder="Enter compnay name">
                             </div>
                         </div>
 
                         <div class="col-4">
                             <div class="form-group">
-                                <label class="fw-bold" for="comapnyProfile">Company Profile</label>
-                                <input type="text" class="form-control" id="comapnyProfile" name="comapnyProfile" placeholder="Enter compnay profile">
+                                <label class="fw-bold" for="companyProfile">Company Profile</label>
+                                <input type="text" class="form-control" id="companyProfile" name="companyProfile" placeholder="Enter compnay profile">
                             </div>
                         </div>
 
                         <div class="col-4">
                             <div class="form-group">
-                                <label class="fw-bold" for="comapnyAddress">Company Address</label>
-                                <textarea class="form-control" id="comapnyAddress" name="comapnyAddress" placeholder="Enter compnay address"></textarea>
+                                <label class="fw-bold" for="companyAddress">Company Address <span class="text-danger"> *</span></label>
+                                <textarea class="form-control" id="companyAddress" name="companyAddress" placeholder="Enter compnay address"></textarea>
                             </div>
                         </div>
 
                         <div class="col-4">
                             <div class="form-group">
-                                <label class="fw-bold" for="comapnyPhone">Company Phone Number</label>
-                                <input type="text" class="form-control" id="comapnyPhone" name="comapnyPhone" placeholder="Enter compnay number">
+                                <label class="fw-bold" for="companyPhone">Company Phone Number <span class="text-danger"> *</span></label>
+                                <input type="text" class="form-control" id="companyPhone" name="companyPhone" placeholder="Enter compnay number">
                             </div>
                         </div>
 
                         <div class="col-4">
                             <div class="form-group">
-                                <label class="fw-bold" for="websiteUrl">Website URL</label>
+                                <label class="fw-bold" for="websiteUrl">Website URL <span class="text-danger"> *</span></label>
                                 <input type="text" class="form-control" id="websiteUrl" name="websiteUrl" placeholder="Enter website url">
                             </div>
                         </div>
@@ -111,7 +111,7 @@
 
                         <div class="col-4">
                             <div class="form-group">
-                                <label class="fw-bold" for="companyLogo">Company Logo</label>
+                                <label class="fw-bold" for="companyLogo">Company Logo <span class="text-danger"> *</span></label>
                                 <input type="file" class="form-control" id="companyLogo" name="companyLogo" placeholder="Select logo" accept="image/*">
                             </div>
                         </div>

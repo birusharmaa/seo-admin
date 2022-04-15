@@ -114,7 +114,25 @@
         <div class="main-content side-content pt-0">
             <div class="container-fluid">
                 <div class="inner-body">
-        
+                    <?php
+                        // $this->request = \Config\Services::request();
+                        // $this->agent = $this->request->getUserAgent();
+                        // //Get device name and OP
+                        // if ($this->agent->isMobile('iphone')) {
+                        //     $device_name = 'IPhone-';
+                        // } elseif ($this->agent->isMobile()) {
+                        //     $device_name = 'Mobile-';
+                        // } else {
+                        //     $device_name = 'PC-';
+                        // }
+                        // $device_name .= $this->agent->getPlatform();
+                        
+                        // //Get url full link
+                        // $current_url = current_url().$page;
+                       
+                        // //Call function
+                        // visitors_history($device_name, $current_url);
+                    ?>
                     <?= $this->renderSection('content'); ?>
 
                 </div>

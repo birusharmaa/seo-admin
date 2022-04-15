@@ -33,6 +33,8 @@ class Partners extends BaseController
         $return['color'] =  getThemeColor($user_data["user_id"]);        
         $return['title'] = 'All Plugins';  
         $return['page_title'] = '';  
+        $return['page'] = '/clients/index.php';  
+
         return view('clients/index',$return);
     }
 }

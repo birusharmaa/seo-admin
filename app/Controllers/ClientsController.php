@@ -27,37 +27,30 @@ class ClientsController extends BaseController
          
     }
 
-    public function index(){       
-        
-        $data['title'] ="Abc";
+    public function index(){
+        $data['title'] ="Clients";
         if($this->session->has('login_user')){
             $user_data = $this->session->get('login_user');
         }
-        $data['color'] =  getThemeColor($user_data["user_id"]); 
-        $data['data'] = $this->model->get_allEnquiry();
-        
+        $data['color'] =  getThemeColor($user_data["user_id"]);        
+        $data['page'] =  '/clients/index';  
+        $data['page_title'] = 'Clients';
         return view('clients/index', $data);
     }
 
+    public function client(){
+        $data['title'] ="CMS";
+        if($this->session->has('login_user')){
+            $user_data = $this->session->get('login_user');
+        }
+        $data['color'] =  getThemeColor($user_data["user_id"]);        
+        $data['page'] =  '/cms/index';  
+        $data['page_title'] = 'CMS';
+        return view('clients/cms', $data);
+    }
+
     public function getclients(){
-        
         $data['data'] = $this->model->get_allEnquiry();
-
-        // $key = getenv('JWT_SECRET_KEY');
-        // $iat = time(); // current timestamp value
-        // $exp = $iat + getenv('JWT_TIME_TO_LIVE');
-        
-        // $payload = array(
-        //     "status" => true,
-        //     "aud" => "Audience that the JWT",
-        //     "access" => "Access allow",
-        //     "iat" => $iat, 
-        //     "exp" => $exp, 
-        // );
-
-        // $token = JWT::encode($payload, $key,'HS256');
-        // $data['token'] = $token;
-
         echo json_encode($data);
     }
 

@@ -72,7 +72,7 @@
             </div>
         </div>
     </section>
-    <?= $this->include('Plugins/modal.php');?>
+    <?= $this->include('partners/modal.php');?>
 <?= $this->endSection();?>
 
 <?= $this->section('script');?>

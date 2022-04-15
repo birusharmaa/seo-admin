@@ -6,6 +6,8 @@ use App\Controllers\App_Controller;
 use App\Libraries\Pdf;
 use App\Libraries\Clean_data;
 use App\Models\Users_model;
+use App\Models\Visitors_history_model;
+
 /**
  * use this to print link location
  *
@@ -2180,11 +2182,36 @@ if (!function_exists('xss_clean')) {
 }
 
 if (!function_exists('getThemeColor')) {
-
-    function getThemeColor($id)
-    {
+    function getThemeColor($id){
         $model = new Users_model();
         $datas = $model->getThemeColor($id);
         return $datas->current_theme;
+    }
+}
+
+if (!function_exists('visitors_history')) {
+    function visitors_history($device=null, $page=null){
+        $model = new Visitors_history_model();
+        if(!empty($page)){
+            $user = $model->where('page_name', $page)->first();
+            if(!empty($user)){
+                $id    =  $user['id'];
+                $click =  $user['click'];
+                $data = [
+                        'page_name'   => $page,
+                        'device_name' => $device,
+                        'click'       => $click+1,
+                   ];
+                $user = $model->update($id, $data);
+            }else{
+                $data = [
+                        'page_name'   => $page,
+                        'device_name' => $device,
+                        'created_at'  => date("Y-m-d H:i:s"),
+                        'click'       => 1,
+                ];
+                $user = $model->insert($data);
+            }
+        }
     }
 }

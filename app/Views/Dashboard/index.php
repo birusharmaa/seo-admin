@@ -1,20 +1,16 @@
 <?php $session = \Config\Services::session()?>
 
 <?= $this->extend('template/main'); ?>
-
 <?= $this->section('content');?>
-
     <div class="page-header">
         <div>
             <?php 
                 if($session->has('login_user')){
                     $user_data = $session->get('login_user');
                 }
-                ?>
-            <h2 class="main-content-title tx-24 mg-b-5">
-                Welcome <?php echo $user_data['user_name']; ?>
-            </h2>
-            <ol class="breadcrumb mt-4">
+            ?>
+            
+            <ol class="breadcrumb mt-5">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
                 <li class="breadcrumb-item active" aria-current="page">
                     Project Dashboard
