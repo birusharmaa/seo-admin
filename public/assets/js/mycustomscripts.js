@@ -140,11 +140,11 @@ $(document).ready(function () {
 
     /* Account Setting Logo Update. */
     $('#logo').on('change', function () {
+        
         const BASEURL = $('#url').val();
         var formData = new FormData();
         let userid = $('#user_id').val();
         formData.append('company_logo', $('#logo')[0].files[0]);
-
         $.ajax({
             url: BASEURL + '/upload-logo/' + userid,
             type: 'POST',
@@ -152,7 +152,9 @@ $(document).ready(function () {
             processData: false,  // tell jQuery not to process the data
             contentType: false,  // tell jQuery not to set contentType
             success: function (data) {
+                data = JSON.parse(data);
                 if (data.status) {
+                    $('.logo-images').attr('src',data.path);
                     $('#site_logo').val(data.path);
                 }
             }
@@ -196,6 +198,7 @@ $(document).ready(function () {
                 success: function (response) {
                     response = JSON.parse(response);
                     if (response.status) {
+                       
                         Notiflix.Notify.success(response.message);
                     } else {
                         Notiflix.Notify.failure(response.message);

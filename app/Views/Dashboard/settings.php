@@ -194,4 +194,9 @@
 
 <?= $this->section('script'); ?>
 	<script src="<?php echo base_url('assets/js/mycustomscripts.js') ?>"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+	        $(".loader-wrapper").hide();
+	    })
+	</script>
 <?= $this->endSection(); ?>

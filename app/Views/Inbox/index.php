@@ -79,6 +79,10 @@
             suppressScrollX: !0
         });
     });
+
+    $(document).ready(function(){
+        $(".loader-wrapper").hide();
+    })
     </script>
 
 <?= $this->endSection(); ?>

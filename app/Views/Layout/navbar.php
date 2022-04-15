@@ -81,7 +81,6 @@
 			if($session->has('login_user')){
 				$user_data = $session->get('login_user');
 				$status = "Online";
-
 			}
 			?>
 			<div class="main-header-notification">
@@ -94,9 +93,9 @@
 				<a class="d-flex" href="#">
 					<span class="main-img-user">
 						<?php if($user_data['company_logo'] ){ ?>
-							<img alt="avatar" class="ac" src="<?php echo base_url().$user_data['company_logo'] ?>"/>
+							<img alt="avatar" class="logo-images" src="<?php echo base_url().'/assets/img/logo/'.$user_data['company_logo'] ?>"/>
 						<?php }else{ ?>
-							<img alt="avatar" src="assets/img/users/1.jpg"/>
+							<img alt="avatar" class="logo-images" src="assets/img/users/1.jpg"/>
 						<?php }?>	
 					</span>
 				</a>

@@ -320,6 +320,10 @@
         };
         new ApexCharts(document.querySelector("#sales-line-chart"), b).render();
     });
+
+     $(document).ready(function(){
+        $(".loader-wrapper").hide();
+    })
     </script>
 
 <?= $this->endSection(); ?>

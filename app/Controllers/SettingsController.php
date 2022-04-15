@@ -37,9 +37,7 @@ class SettingsController extends BaseController
         return view('dashboard/settings',$data);
     }
 
-    public function profile()
-    {
-        
+    public function profile(){
         $model = new Users_model();
         if($this->session->has('login_user')){
             $user_data = $this->session->get('login_user');
@@ -48,7 +46,7 @@ class SettingsController extends BaseController
         $data['color'] =  getThemeColor($user_data["user_id"]);       
         $data['userInfo'] =  $userinfo; 
         $data['title'] = "Profile";
-        return view('Dashboard/profile',$data);
+        return view('dashboard/profile',$data);
     }
 
     public function dashboard(){        
@@ -87,12 +85,31 @@ class SettingsController extends BaseController
     {          
         $model = new Users_model();
         $file_name = rand() . $_FILES['company_logo']['name'];       
-        $filewithpath = "/assets/img/logo/" . $file_name;        
         $file = $this->request->getFile('company_logo');
         $file->move('./assets/img/logo', $file_name);
-        $return = $model->uploadImage($id,$filewithpath); 
+        $return = $model->uploadImage($id,$file_name); 
         if($return){
-            echo json_encode(['status'=> true, 'path'=>$filewithpath]);
+            $db = db_connect();
+            $sql = "select * from `seo_users` where id=".$id." ";
+            $result = $db->query($sql);            
+        
+            $user_info = $result->getRow();
+        
+            if($user_info->user_status == '1'){
+                $session = \Config\Services::session();
+                $newdata = [
+                    'user_id' =>  $user_info->id,
+                    'user_name' =>   $user_info->user_name,                    
+                    'user_email' =>  $user_info->user_email,  
+                    'company_logo' =>  $user_info->company_logo, 
+                    'current_theme' => $user_info->current_theme,
+                    'logged_in' => true,
+                ];                 
+                $session->set('login_user', $newdata); 
+            } 
+
+            $path = base_url().'/assets/img/logo/'.$file_name;
+            echo json_encode(['status'=> true, 'path'=>$path]);
         }else{
             return false;
         }  
