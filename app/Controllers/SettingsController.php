@@ -135,14 +135,15 @@ class SettingsController extends BaseController
     {       
         $model = new Users_model();
         $password = $_POST['password']; 
-        $user_data = array("user_password" => MD5($password));
+        $enctype_password =  password_hash($password, PASSWORD_DEFAULT);
+
+        $user_data = array("user_password" => $enctype_password );
         $return = $model->UpdateUser($id,$user_data); 
         if($return){
             echo json_encode(['status'=>true,'message'=>'Password Change Successfully']);
         }else{
             echo json_encode(['status'=>false,'message'=>'Their is some problem. Please try again.']);
         }
- 
     }
 
     function compony_Info($id){
