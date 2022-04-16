@@ -18,3 +18,5 @@ if($this->session->has('login_user')){
 <link href="<?=base_url();?>/assets/css/skins.css" rel="stylesheet" />
 
 <link href="<?=base_url();?>/assets/css/colors/default.css" rel="stylesheet" />
+<link rel="stylesheet" href="<?php echo base_url('assets/notify/dist/notiflix-3.2.4.min.css')?>">
+

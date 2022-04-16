@@ -62,6 +62,7 @@
 												<button class="btn ripple btn-primary mt-3 btn-block">
 													Generate OTP
 												</button>
+												<div class="mt-3"><a href="<?=base_url();?>">Back to login</a></div> 
 											</form>
 											<!-- <div class="text-left mt-3 ml-0 ">
 												<div class="mb-1"><a href="<?=base_url();?>/forget-password">Forgot password?</a></div>
@@ -72,7 +73,7 @@
 
 
 
-											<div class="Password-form  p-0">
+										<div class="Password-form  p-0">
                                     		<div id="MyForm" style="display:none">
 												<div class="form-group text-left">
 													<div id="validate_message"></div>
@@ -87,20 +88,21 @@
 															<div class="modal-content" style="margin-top:75px">
 																<div class="modal-header red-bg">
 																	<h5 class="modal-title text-white" id="exampleModalLabel">  Reset Password </h5>
-																	<button type="button" class="btn-close bg-white"
-																		data-bs-dismiss="modal" aria-label="btn-close">
+																	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																		<span aria-hidden="true">&times;</span>
 																	</button>
 																</div>
 																<div class="modal-body">
 																	<form action="#" method="POST" class="px-5 py-2" id="Reset-Password">
 																		<input type="hidden" name="user_email" id="user_email">
+																		<input type="hidden" name="oldOtp" id="oldOtp">
 																		<div class="form-group text-left">
 																			<label style="font-weight:600">New Password</label>
-																			<input class="form-control text-dark" id="matchPassword" name="password" placeholder="password" type="password" maxlength="6"/>
+																			<input class="form-control text-dark" id="matchPassword" name="password" placeholder="password" type="password" minlength="6"/>
 																		</div>
 																		<div class="form-group text-left">
 																			<label style="font-weight:600">Confirm Password</label>
-																			<input class="form-control text-dark" name="confirmPassword" placeholder="Confirm password" id="matchConfirmPassword" maxlength="6" type="password"/>
+																			<input class="form-control text-dark" name="confirmPassword" placeholder="Confirm password" id="matchConfirmPassword" minlength="6" type="password"/>
 																		</div>
 																		<div class="text-end">
 																			<a href="<?=base_url();?>/">
@@ -149,18 +151,23 @@
             $("#MyForm").css({
                 padding: "10px"
             });
-            $("#MyForm").show(500);
+           
             // $("#MyForm").css("padding", "10px");
-            $("#password-form").hide(500);			
+            $(".validation").remove();
 			$.ajax({
 				url: '<?php echo base_url('send-otp');?>',
 				type: "POST",
 				data: $('#password-form').serialize(),
 				success: function(response) {
 					response= JSON.parse(response);	
-					if(response.return){
+					if(response.status){
 						$('#saved_id').val(response.saved_id);
-						
+						$("#field").parent().append('<span class="validation text-danger">Your OTP sent successfully on register mobile '+response.mobile+'</span>')
+						$("#password-form").hide(500);
+						$("#MyForm").show(500);		
+					}else{
+						$("#email").parent().append('<span class="validation text-danger">'+response.message+'</span>');
+
 					}								
 				}            
 			});
@@ -171,11 +178,11 @@
 
     $(document).ready(function() {
         $('#OTPfilled').on('click', function() {
+			$(".validation").remove();
             const field = $('#field').val().length;
 			const otp = $('#field').val();
-			const saveid = $('#saved_id').val().length;
+			const saveid = $('#saved_id').val();
             if (field === 6) {
-               
 				$.ajax({
 					url: '<?php echo base_url('verify-otp');?>',
 					type: "POST",
@@ -187,14 +194,19 @@
 						response= JSON.parse(response);
 						$("#validate_message").innerHTML= response.message;
 						if(response.success){
-							$("#user_email").val(response.data.email);							
+							$("#user_email").val(response.data.email);
+							let val = $("#field").val();
+							$("#oldOtp").val(val);
+							
 							$("#exampleModal").modal('show');							
+						}else{
+							$("#field").parent().append('<span class="validation text-danger">'+response.message+'</span>')
 						}								
 					}            
 				});
 
             } else {
-                alert("Please enter the valid OTP")
+                $("#field").parent().append('<span class="validation text-danger">Please enter valid OTP.</span>')
             }
         });
     });
@@ -235,12 +247,14 @@
 						response= JSON.parse(response);
 						$("#validate_message").innerHTML= response.message;
 						if(response.success){
+							Notiflix.Notify.success("Your password reset successfully.");
 							window.location.href = '<?=base_url();?>';							
 						}								
 					}            
 				});
 			}
         });
+		
     });
     </script>
 </body>

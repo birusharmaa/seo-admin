@@ -13,13 +13,16 @@ class Verification_model extends Crud_model {
 
     function get_details($options = array()) {
         $verification_table = 'seo_verification';
-
+       
         $where = "";
-
-        $code = get_array_value($options, "code");
+        $code = "";
+        if(isset($options['otp'])){
+            $code = $options['otp'];
+        }
+        
         if ($code) {
             $code = $this->db->escapeString($code);
-            $where .= " AND $verification_table.code='$code'";
+            $where .= " AND $verification_table.otp='$code'";
         }
 
         $type = get_array_value($options, "type");
@@ -30,6 +33,7 @@ class Verification_model extends Crud_model {
         $sql = "SELECT $verification_table.*
         FROM $verification_table
         WHERE $verification_table.deleted=0 $where";
+        
         return $this->db->query($sql);
     }
 

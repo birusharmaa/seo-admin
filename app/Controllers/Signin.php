@@ -182,18 +182,21 @@ class Signin extends AppController
     function send_reset_password_mobile_otp()
     {
         $user_data =  $this->user_model->getUserInfo($_POST['email']);
-        $mobile = $user_data->user_phone;       
-           
+        $existing_user = "";
+        if(!empty($user_data)){
+            $mobile = $user_data->user_phone; 
+            $existing_user = $this->user_model->is_mobile_exists($mobile);
+        }
+              
+        
         // $saved_id =  isset($_POST['saved_id']) ? $this->request->getPost("saved_id") : false;
         // if ($saved_id != false) {
         //     $this->Verification_model->delete_permanently($saved_id);
         // }
 
-        $existing_user = $this->user_model->is_mobile_exists($mobile);
+       
         //send reset password email if found account with this email
         if ($existing_user) {       
-           
-
             $verification_data = array(
                 "type" => "reset_password",
                 "code" => make_random_string(),
@@ -210,12 +213,20 @@ class Signin extends AppController
                 "route" => "otp",
                 "numbers" => "$mobile",
             );
+            
             $res =  sendOtpOnMobile($fields);
             $res = json_decode($res);
+            $mob = $existing_user->user_phone;
+            $final_mobile = substr($mob, -4);
+            $final_mobile = "******".$final_mobile;
+
             $res->saved_id = $save_id;
+            $res->id = $existing_user->id;
+            $res->status = true;
+            $res->mobile = $final_mobile;
             echo json_encode($res);
         } else {
-            echo json_encode(array("success" => false, 'message' => app_lang("no_acount_found_with_this_mobile")));
+            echo json_encode(array("status" => false, 'message' => 'Email id is not registered!'));
         }
     }
 
@@ -227,12 +238,13 @@ class Signin extends AppController
             "otp" => "required|min_length[6]|max_length[6]"
         ));
 
-        $otp = $this->request->getPost("otp");       
+        $otp = $this->request->getPost("otp");   
+        
         $email = $this->is_valid_reset_password_otp($otp);
         if ($email) {
-            echo json_encode(array('success' => true, 'message' => app_lang("otp_verified"), 'data' => $email));
+            echo json_encode(array('success' => true, 'message' => "otp_verified", 'data' => $email));
         } else {
-            echo json_encode(array('success' => false, 'message' => app_lang('invalid_otp')));
+            echo json_encode(array('success' => false, 'message' => 'Please enter valid OTP.'));
         }
     }
 
@@ -268,13 +280,15 @@ class Signin extends AppController
         ));
 
         $key = $this->request->getPost("user_email");
+        $oldOtp = $this->request->getPost("oldOtp");
         $password = $this->request->getPost("password");        
-        $valid_key = $this->is_valid_reset_password_email($key);    
+        $valid_key = $this->is_valid_reset_password_email($oldOtp);    
         
         if ($valid_key) {
             $email = get_array_value($valid_key, "email");
             $user = $this->user_model->is_email_exists($email);
-            $user_data = array("user_password" => MD5($password));
+            $encrypt_password = password_hash($password, PASSWORD_DEFAULT);
+            $user_data = array("user_password" => $encrypt_password);
 
             if ($user->id && $this->user_model->updatePassword($user_data, $user->id)) {
                 //user can't reset password two times with the same code
@@ -315,10 +329,9 @@ class Signin extends AppController
     //check valid key
     private function is_valid_reset_password_email($verification_code = "")
     {   
-
-      
         if ($verification_code) {
-            $options = array("email" => $verification_code, "type" => "reset_password");
+            
+            $options = array("otp" => $verification_code, "type" => "reset_password");
             $verification_info = $this->Verification_model->get_details($options)->getRow();
           
             if ($verification_info && $verification_info->id) {
@@ -335,11 +348,13 @@ class Signin extends AppController
     }
 
     //check valid key
-    private function is_valid_reset_password_otp($verification_code = "")
-    {
+    private function is_valid_reset_password_otp($verification_code = ""){
         if ($verification_code) {
+            // echo $verification_code;
+            // exit;
             $options = array("otp" => $verification_code, "type" => "reset_password");
             $verification_info = $this->Verification_model->get_details($options)->getRow();
+            
             if ($verification_info && $verification_info->id) {
                 $reset_password_info = unserialize($verification_info->params);
 
@@ -347,6 +362,7 @@ class Signin extends AppController
                 $expire_time = get_array_value($reset_password_info, "expire_time");
 
                 if ($email && filter_var($email, FILTER_VALIDATE_EMAIL) && $expire_time && $expire_time > time()) {
+                    
                     return array("email" => $email);
                 }
             }
