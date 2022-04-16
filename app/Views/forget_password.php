@@ -83,6 +83,7 @@
 												</div>
                                         		<div class="form-group">
 													<button type="submit"  id="OTPfilled" class="btn ripple btn-primary mt-2 btn-block">Verify</button>
+													<div class="mt-3"><a href="<?=base_url();?>">Back to login</a></div>
 													<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 														<div class="modal-dialog">
 															<div class="modal-content" style="margin-top:75px">
