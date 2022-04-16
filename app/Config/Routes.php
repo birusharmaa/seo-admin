@@ -136,7 +136,7 @@ $routes->group('curl', function($routes){
     $routes->get('get-all-clients', 'CurlController::getAllClients');
     $routes->post('change-client-status/(:num)', 'CurlController::changeClientStatus/$1');
     $routes->delete('delete-client/(:num)', 'CurlController::deleteClient/$1');
-    
+    $routes->post('add-client', 'CurlController::addClient');
 });
 
 

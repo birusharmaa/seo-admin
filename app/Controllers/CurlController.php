@@ -192,6 +192,47 @@ class CurlController extends Security_Controller
             exit;
         }
     }
+
+    public function addClient(){
+        $ch = curl_init();
+        $cfile = new \CURLFile(
+            $_FILES['companyLogo']['tmp_name'],
+            $_FILES['companyLogo']['type'],
+            $_FILES['companyLogo']['name']
+        );
+        $data = array( "name"=> $_REQUEST['name'], 
+                        "email"=> $_REQUEST['email'], 
+                        "phone"=> $_REQUEST['phone'], 
+                        "password"=> $_REQUEST['password'], 
+                        "confirmPassword"=> $_REQUEST['confirmPassword'], 
+                        "companyName"=> $_REQUEST['companyName'], 
+                        "companyProfile"=> $_REQUEST['companyProfile'], 
+                        "companyAddress"=> $_REQUEST['companyAddress'], 
+                        "companyPhone"=> $_REQUEST['companyPhone'], 
+                        "websiteUrl"=> $_REQUEST['websiteUrl'], 
+                        "facebookLink"=> $_REQUEST['facebookLink'], 
+                        "twitterLink"=> $_REQUEST['twitterLink'], 
+                        "googleplus"=> $_REQUEST['googleplus'], 
+                        "linkedIn"=> $_REQUEST['linkedIn'], 
+                        "partner_name"=> $_REQUEST['partner_name'], 
+
+                        //"linkedIn"=> $_REQUEST['linkedIn']);
+                        "companyLogo"=> $cfile );
+        curl_setopt($ch, CURLOPT_URL,'https://plugins.thewingshield.com/clients/add-client');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'email: validate@gmail.com',
+            'password: $2y$10$m5.B8neWkBHYk3o2dMcpNe1c8RLcPIxvCw1zdwjrCOEDuZbKe7viG'
+        ));
+        
+        $response = curl_exec($ch);
+        curl_close($ch); // Close the connection
+        echo $response;
+        exit;
+    }
     
 
     

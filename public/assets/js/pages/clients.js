@@ -126,111 +126,260 @@ function loadClientsData(result) {
     $(".loader-wrapper").hide();
 }
 
-$("#saveParnter").click(function(){
+$("#saveClient").click(function(){
     $(".validation").remove();
-    let url = "https://partners.thewingshield.com/partners/add-partner";
-
-    var file_data = $("#companyLogo").prop("files")[0];
-    var name      = $("#name").val();
-    var data = document.getElementById('add-parter-form');
-    var form_data = new FormData(data);
+    //let url = "https://partners.thewingshield.com/partners/add-partner";
+    
     // form_data.append("file", file_data);
     // form_data.append("name", name);
-    $(".loader-wrapper").hide();
-    $.ajax({
-        url:url,
-        headers: {
-            'email':emails,
-            'password':pass,  
-        },
-        data: form_data,
-        dataType:"json",
-        type:"post",
-        cache: false,
-        contentType: false,
-        processData: false,
-        success:function(data){
-            Swal.fire("Success!", "Partner created successfully!", "success");
-            $("#add-parter-form").trigger('reset');
-            $('.close').trigger('click');
-            getClientLists();
-        },
-        error:function(error, exh){
-            if(error.responseJSON.messages.comapnyAddress){
-                $("#comapnyAddress").addClass('input-error');
-                $("#comapnyAddress").parent().append('<span class="text-danger validation">'+error.responseJSON.messages.comapnyAddress+'</span>');
-            }
+    let flag = true;
 
-            if(error.responseJSON.messages.comapnyName){
-                $("#comapnyName").addClass('input-error');
-                $("#comapnyName").parent().append('<span class="text-danger validation">'+error.responseJSON.messages.comapnyName+'</span>');
-            }
+    if($("#name").val()==""){
+        $("#name").addClass('input-error');
+        $("#name").parent().append('<span class="text-danger validation">Please enter name.</span>');
+        flag = false;
+    }
 
-            if(error.responseJSON.messages.comapnyPhone){
-                $("#comapnyPhone").addClass('input-error');
-                $("#comapnyPhone").parent().append('<span class="text-danger validation">'+error.responseJSON.messages.comapnyPhone+'</span>');
-            }
+    if($("#email").val()==""){
+        $("#email").addClass('input-error');
+        $("#email").parent().append('<span class="text-danger validation">Please enter email.</span>');
+        flag = false;
+    }
 
-            if(error.responseJSON.messages.comapnyProfile){
-                $("#comapnyProfile").addClass('input-error');
-                $("#comapnyProfile").parent().append('<span class="text-danger validation">'+error.responseJSON.messages.comapnyProfile+'</span>');
-            }
+    if($("#phone").val()==""){
+        $("#phone").addClass('input-error');
+        $("#phone").parent().append('<span class="text-danger validation">Please enter phone number.</span>');
+        flag = false;
+    }
 
-            if(error.responseJSON.messages.companyLogo){
-                $("#companyLogo").addClass('input-error');
-                $("#companyLogo").parent().append('<span class="text-danger validation">'+error.responseJSON.messages.companyLogo+'</span>');
-            }
+    if($("#password").val()==""){
+        $("#password").addClass('input-error');
+        $("#password").parent().append('<span class="text-danger validation">Please enter password.</span>');
+        flag = false;
+    } 
 
-            if(error.responseJSON.messages.email){
-                $("#email").addClass('input-error');
-                $("#email").parent().append('<span class="text-danger validation">'+error.responseJSON.messages.email+'</span>');
-            }
+    if($("#confirmPassword").val()==""){
+        $("#confirmPassword").addClass('input-error');
+        $("#confirmPassword").parent().append('<span class="text-danger validation">Please enter confirm password.</span>');
+        flag = false;
+    }
 
-            if(error.responseJSON.messages.facebookLink){
-                $("#facebookLink").addClass('input-error');
-                $("#facebookLink").parent().append('<span class="text-danger validation">'+error.responseJSON.messages.facebookLink+'</span>');
-            }
+    if($("#password").val()!="" && $("#confirmPassword").val()!="" && $("#confirmPassword").val() != $("#password").val()){
+        $("#confirmPassword").addClass('input-error');
+        $("#confirmPassword").parent().append('<span class="text-danger validation">Password and confirm password are not matched.</span>');
+        flag = false;
+    }
 
-            if(error.responseJSON.messages.googleplus){
-                $("#googleplus").addClass('input-error');
-                $("#googleplus").parent().append('<span class="text-danger validation">'+error.responseJSON.messages.googleplus+'</span>');
-            }
+    if($("#companyName").val()==""){
+        $("#companyName").addClass('input-error');
+        $("#companyName").parent().append('<span class="text-danger validation">Please enter company name.</span>');
+        flag = false;
+    }
 
-            if(error.responseJSON.messages.linkedIn){
-                $("#linkedIn").addClass('input-error');
-                $("#linkedIn").parent().append('<span class="text-danger validation">'+error.responseJSON.messages.linkedIn+'</span>');
-            }
+    if($("#companyAddress").val()==""){
+        $("#companyAddress").addClass('input-error');
+        $("#companyAddress").parent().append('<span class="text-danger validation">Please enter company Address.</span>');
+        flag = false;
+    }
 
-            if(error.responseJSON.messages.name){
-                $("#name").addClass('input-error');
-                $("#name").parent().append('<span class="text-danger validation">'+error.responseJSON.messages.name+'</span>');
-            }
+    if($("#companyPhone").val()==""){
+        $("#companyPhone").addClass('input-error');
+        $("#companyPhone").parent().append('<span class="text-danger validation">Please enter company phone number.</span>');
+        flag = false;
+    }
 
-            if(error.responseJSON.messages.phone){
-                $("#phone").addClass('input-error');
-                $("#phone").parent().append('<span class="text-danger validation">'+error.responseJSON.messages.phone+'</span>');
-            }
+    if($("#websiteUrl").val()==""){
+        flag = false;
+        $("#websiteUrl").addClass('input-error');
+        $("#websiteUrl").parent().append('<span class="text-danger validation">Please enter website url.</span>');
+    }
 
-            if(error.responseJSON.messages.comapnyAddress){
-                $("#twitterLink").addClass('input-error');
-                $("#twitterLink").parent().append('<span class="text-danger validation">'+error.responseJSON.messages.twitterLink+'</span>');
-            }
+    var file = document.getElementById("companyLogo");
+    if (file.files.length == 0) {
+        flag = false;
+        $("#companyLogo").addClass('input-error');
+        $("#companyLogo").parent().append('<span class="text-danger validation">Please select logo image.</span>');
+    } 
 
-            if(error.responseJSON.messages.websiteUrl){
-                $("#websiteUrl").addClass('input-error');
-                $("#websiteUrl").parent().append('<span class="text-danger validation">'+error.responseJSON.messages.websiteUrl+'</span>');
+
+    // if(data.messages.websiteUrl){
+    //     $("#confirmPassword").addClass('input-error');
+    //     $("#confirmPassword").parent().append('<span class="text-danger validation">'+data.messages.confirmPassword+'</span>');
+    // }
+
+    
+    if(flag){
+        let url = BaseUrl+"curl/add-client";
+        var data = document.getElementById('add-client-form');
+        var form_data = new FormData(data);
+        $(".loader-wrapper").hide();
+        $.ajax({
+            url:url,
+            headers: {
+                'email':emails,
+                'password':pass,  
+            },
+            data: form_data,
+            dataType:"json",
+            type:"post",
+            cache: false,
+            contentType: false,
+            processData: false,
+            success:function(data){
+                if(data.status!="400"){
+                    $(".loader-wrapper").hide();
+                    Swal.fire("Success!", "Client created successfully!", "success");
+                    $('.close').trigger('click');
+                    getClientLists();
+                }else{
+                    if(data.messages.companyAddress){
+                        $("#companyAddress").addClass('input-error');
+                        $("#companyAddress").parent().append('<span class="text-danger validation">'+data.messages.companyAddress+'</span>');
+                    }
+        
+                    if(data.messages.companyName){
+                        $("#companyName").addClass('input-error');
+                        $("#companyName").parent().append('<span class="text-danger validation">'+data.messages.companyName+'</span>');
+                    }
+        
+                    if(data.messages.companyPhone){
+                        $("#companyPhone").addClass('input-error');
+                        $("#companyPhone").parent().append('<span class="text-danger validation">'+data.messages.companyPhone+'</span>');
+                    }
+        
+                    if(data.messages.companyProfile){
+                        $("#companyProfile").addClass('input-error');
+                        $("#companyProfile").parent().append('<span class="text-danger validation">'+data.messages.companyProfile+'</span>');
+                    }
+        
+                    if(data.messages.companyLogo){
+                        $("#companyLogo").addClass('input-error');
+                        $("#companyLogo").parent().append('<span class="text-danger validation">'+data.messages.companyLogo+'</span>');
+                    }
+        
+                    if(data.messages.email){
+                        $("#email").addClass('input-error');
+                        $("#email").parent().append('<span class="text-danger validation">'+data.messages.email+'</span>');
+                    }
+        
+                    if(data.messages.facebookLink){
+                        $("#facebookLink").addClass('input-error');
+                        $("#facebookLink").parent().append('<span class="text-danger validation">'+data.messages.facebookLink+'</span>');
+                    }
+        
+                    if(data.messages.googleplus){
+                        $("#googleplus").addClass('input-error');
+                        $("#googleplus").parent().append('<span class="text-danger validation">'+data.messages.googleplus+'</span>');
+                    }
+        
+                    if(data.messages.linkedIn){
+                        $("#linkedIn").addClass('input-error');
+                        $("#linkedIn").parent().append('<span class="text-danger validation">'+data.messages.linkedIn+'</span>');
+                    }
+        
+                    if(data.messages.name){
+                        $("#name").addClass('input-error');
+                        $("#name").parent().append('<span class="text-danger validation">'+data.messages.name+'</span>');
+                    }
+        
+                    if(data.messages.phone){
+                        $("#phone").addClass('input-error');
+                        $("#phone").parent().append('<span class="text-danger validation">'+data.messages.phone+'</span>');
+                    }
+        
+                    if(data.messages.websiteUrl){
+                        $("#websiteUrl").addClass('input-error');
+                        $("#websiteUrl").parent().append('<span class="text-danger validation">'+data.messages.websiteUrl+'</span>');
+                    }
+                    if(data.messages.password){
+                        $("#password").addClass('input-error');
+                        $("#password").parent().append('<span class="text-danger validation">'+data.messages.password+'</span>');
+                    }
+                    if(data.messages.confirmPassword){
+                        $("#confirmPassword").addClass('input-error');
+                        $("#confirmPassword").parent().append('<span class="text-danger validation">'+data.messages.confirmPassword+'</span>');
+                    }
+                    $(".loader-wrapper").hide();
+                }
+                
+            },
+            error:function(error, exh){
+                if(error.responseJSON.messages.companyAddress){
+                    $("#companyAddress").addClass('input-error');
+                    $("#companyAddress").parent().append('<span class="text-danger validation">'+error.responseJSON.messages.companyAddress+'</span>');
+                }
+
+                if(error.responseJSON.messages.companyName){
+                    $("#companyName").addClass('input-error');
+                    $("#companyName").parent().append('<span class="text-danger validation">'+error.responseJSON.messages.companyName+'</span>');
+                }
+
+                if(error.responseJSON.messages.companyPhone){
+                    $("#companyPhone").addClass('input-error');
+                    $("#companyPhone").parent().append('<span class="text-danger validation">'+error.responseJSON.messages.companyPhone+'</span>');
+                }
+
+                if(error.responseJSON.messages.companyProfile){
+                    $("#companyProfile").addClass('input-error');
+                    $("#companyProfile").parent().append('<span class="text-danger validation">'+error.responseJSON.messages.companyProfile+'</span>');
+                }
+
+                if(error.responseJSON.messages.companyLogo){
+                    $("#companyLogo").addClass('input-error');
+                    $("#companyLogo").parent().append('<span class="text-danger validation">'+error.responseJSON.messages.companyLogo+'</span>');
+                }
+
+                if(error.responseJSON.messages.email){
+                    $("#email").addClass('input-error');
+                    $("#email").parent().append('<span class="text-danger validation">'+error.responseJSON.messages.email+'</span>');
+                }
+
+                if(error.responseJSON.messages.facebookLink){
+                    $("#facebookLink").addClass('input-error');
+                    $("#facebookLink").parent().append('<span class="text-danger validation">'+error.responseJSON.messages.facebookLink+'</span>');
+                }
+
+                if(error.responseJSON.messages.googleplus){
+                    $("#googleplus").addClass('input-error');
+                    $("#googleplus").parent().append('<span class="text-danger validation">'+error.responseJSON.messages.googleplus+'</span>');
+                }
+
+                if(error.responseJSON.messages.linkedIn){
+                    $("#linkedIn").addClass('input-error');
+                    $("#linkedIn").parent().append('<span class="text-danger validation">'+error.responseJSON.messages.linkedIn+'</span>');
+                }
+
+                if(error.responseJSON.messages.name){
+                    $("#name").addClass('input-error');
+                    $("#name").parent().append('<span class="text-danger validation">'+error.responseJSON.messages.name+'</span>');
+                }
+
+                if(error.responseJSON.messages.phone){
+                    $("#phone").addClass('input-error');
+                    $("#phone").parent().append('<span class="text-danger validation">'+error.responseJSON.messages.phone+'</span>');
+                }
+
+                if(error.responseJSON.messages.companyAddress){
+                    $("#twitterLink").addClass('input-error');
+                    $("#twitterLink").parent().append('<span class="text-danger validation">'+error.responseJSON.messages.twitterLink+'</span>');
+                }
+
+                if(error.responseJSON.messages.websiteUrl){
+                    $("#websiteUrl").addClass('input-error');
+                    $("#websiteUrl").parent().append('<span class="text-danger validation">'+error.responseJSON.messages.websiteUrl+'</span>');
+                }
+                if(error.responseJSON.messages.password){
+                    $("#password").addClass('input-error');
+                    $("#password").parent().append('<span class="text-danger validation">'+error.responseJSON.messages.password+'</span>');
+                }
+                if(error.responseJSON.messages.confirmPassword){
+                    $("#confirmPassword").addClass('input-error');
+                    $("#confirmPassword").parent().append('<span class="text-danger validation">'+error.responseJSON.messages.confirmPassword+'</span>');
+                }
+                $(".loader-wrapper").hide();
             }
-            if(error.responseJSON.messages.password){
-                $("#password").addClass('input-error');
-                $("#password").parent().append('<span class="text-danger validation">'+error.responseJSON.messages.password+'</span>');
-            }
-            if(error.responseJSON.messages.confirmPassword){
-                $("#confirmPassword").addClass('input-error');
-                $("#confirmPassword").parent().append('<span class="text-danger validation">'+error.responseJSON.messages.confirmPassword+'</span>');
-            }
-            $(".loader-wrapper").hide();
-        }
-    });
+        });
+    }
 });
 
 $("#name").keyup(function(){
@@ -245,16 +394,16 @@ $("#phone").keyup(function(){
 $("#companyLogo").change(function(){
     $(this).parent().find('.validation').remove();
 });
-$("#comapnyAddress").keyup(function(){
+$("#companyAddress").keyup(function(){
     $(this).parent().find('.validation').remove();
 });
-$("#comapnyName").keyup(function(){
+$("#companyName").keyup(function(){
     $(this).parent().find('.validation').remove();
 });
-$("#comapnyPhone").keyup(function(){
+$("#companyPhone").keyup(function(){
     $(this).parent().find('.validation').remove();
 });
-$("#comapnyProfile").keyup(function(){
+$("#companyProfile").keyup(function(){
     $(this).parent().find('.validation').remove();
 });
 $("#facebookLink").keyup(function(){
@@ -296,8 +445,9 @@ function display(input) {
     }
 }
 
-$('#addParterModal').on('hidden.bs.modal', function (e) {
-    $("#add-parter-form").trigger('reset');
+$('#addClientModel').on('hidden.bs.modal', function (e) {
+    $(".validation").remove();
+    $("#add-client-form").trigger('reset');
 }) 
 
 function deletePartner(id=null, user_email=null){
