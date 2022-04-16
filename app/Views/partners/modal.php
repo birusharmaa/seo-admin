@@ -27,7 +27,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label class="fw-bold" for="email">Phone <span class="text-danger"> *</span></label>
-                                <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter phone">
+                                <input type="text" onkeydown="return /[0-9]/i.test(event.key)" maxlength="10" class="form-control" id="phone" name="phone" placeholder="Enter phone">
                             </div>
                         </div>
 
@@ -69,7 +69,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label class="fw-bold" for="companyPhone">Company Phone Number <span class="text-danger"> *</span></label>
-                                <input type="text" class="form-control" id="companyPhone" name="companyPhone" placeholder="Enter compnay number">
+                                <input type="text" onkeydown="return /[0-9]/i.test(event.key)" maxlength="10" class="form-control" id="companyPhone" name="companyPhone" placeholder="Enter compnay number">
                             </div>
                         </div>
 

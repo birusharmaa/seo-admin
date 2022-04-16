@@ -37,9 +37,11 @@ $(document).ready(function () {
                 success: function (response) {
                     response = JSON.parse(response);
                     if (response.status) {
-                        Notiflix.Notify.success(response.message);
+                        //Notiflix.Notify.success();
+                        Swal.fire("Success!", response.message, "success");
                     } else {
-                        Notiflix.Notify.failure(response.message);
+                        //Swal.fire("Error!", response.message, "error");
+                        Swal.fire("Error!", response.message, "error");
                     }
                 }
             });
@@ -83,9 +85,11 @@ $(document).ready(function () {
                 success: function (response) {
                     response = JSON.parse(response);
                     if (response.status) {
-                        Notiflix.Notify.success(response.message);
+                        //0Swal.fire("Success!", response.message, "success");
+                        Swal.fire("Success!", response.message, "success");
                     } else {
-                        Notiflix.Notify.failure(response.message);
+                        //Swal.fire("Error!", response.message, "error");
+                        Swal.fire("Error!", response.message, "error");
                     }
                 }
             });
@@ -129,9 +133,11 @@ $(document).ready(function () {
                 success: function (response) {
                     response = JSON.parse(response);
                     if (response.status) {
-                        Notiflix.Notify.success(response.message);
+                        //Swal.fire("Success!", response.message, "success");
+                        Swal.fire("Success!", response.message, "success");
                     } else {
-                        Notiflix.Notify.failure(response.message);
+                        //Swal.fire("Error!", response.message, "error");
+                        Swal.fire("Error!", response.message, "error");
                     }
                 }
             });
@@ -140,7 +146,7 @@ $(document).ready(function () {
 
     /* Account Setting Logo Update. */
     $('#logo').on('change', function () {
-        
+         
         const BASEURL = $('#url').val();
         var formData = new FormData();
         let userid = $('#user_id').val();
@@ -198,10 +204,11 @@ $(document).ready(function () {
                 success: function (response) {
                     response = JSON.parse(response);
                     if (response.status) {
-                       
-                        Notiflix.Notify.success(response.message);
+                        Swal.fire("Success!", response.message, "success");
+                        //Swal.fire("Success!", response.message, "success");
                     } else {
-                        Notiflix.Notify.failure(response.message);
+                        Swal.fire("Error!", response.message, "error");
+                        //Swal.fire("Error!", response.message, "error");
                     }
                 }
             });
@@ -245,9 +252,11 @@ $(document).ready(function () {
                 success: function (response) {
                     response = JSON.parse(response);
                     if (response.status) {
-                        Notiflix.Notify.success(response.message);
+                        //Swal.fire("Success!", response.message, "success");
+                        Swal.fire("Success!", response.message, "success");
                     } else {
-                        Notiflix.Notify.failure(response.message);
+                        //Swal.fire("Error!", response.message, "error");
+                        Swal.fire("Error!", response.message, "error");
                     }
                 }
             });
@@ -291,9 +300,11 @@ $(document).ready(function () {
                 success: function (response) {
                     response = JSON.parse(response);
                     if (response.status) {
-                        Notiflix.Notify.success(response.message);
+                        //Swal.fire("Success!", response.message, "success");
+                        Swal.fire("Success!", response.message, "success");
                     } else {
-                        Notiflix.Notify.failure(response.message);
+                        //Swal.fire("Error!", response.message, "error");
+                        Swal.fire("Error!", response.message, "error");
                     }
                 }
             });
@@ -337,9 +348,11 @@ $(document).ready(function () {
                         $('#business_type').val('');
                         $("#activeStatus").prop("checked", true);
                         $('#submit_btn').text("Save");
-                        Notiflix.Notify.success(response.message);
+                        //Swal.fire("Success!", response.message, "success");
+                        Swal.fire("Success!", response.message, "success");
                     } else {
-                        Notiflix.Notify.failure(response.message);
+                        //Swal.fire("Error!", response.message, "error");
+                        Swal.fire("Error!", response.message, "error");
                     }
                 }
             });
@@ -383,12 +396,15 @@ $(document).ready(function () {
                         $('#country_name').val('');
                         $("#activeStatus").prop("checked", true);
                         $('#submit_btn').text("Save");
-                        Notiflix.Notify.success(response.message);
+                        //Swal.fire("Success!", response.message, "success");
+                        Swal.fire("Success!", response.message, "success");
                     } else {
                         if (response.validation_error) {
-                            Notiflix.Notify.warning(response.message);
+                            //Notiflix.Notify.warning(response.message);
+                            Swal.fire("Error!", response.message, "error");
                         } else {
-                            Notiflix.Notify.failure(response.message);
+                            //Swal.fire("Error!", response.message, "error");
+                            Swal.fire("Error!", response.message, "error");
                         }
                     }
                 }
@@ -440,9 +456,9 @@ $(document).ready(function () {
                         $('#country_id').val('');
                         $("#activeStatus").prop("checked", true);
                         $('#submit_btn').text("Save");
-                        Notiflix.Notify.success(response.message);
+                        Swal.fire("Success!", response.message, "success");
                     } else {
-                        Notiflix.Notify.failure(response.message);
+                        Swal.fire("Error!", response.message, "error");
                     }
                 }
             });
@@ -493,9 +509,9 @@ $(document).ready(function () {
                         $('#state_id').val('');
                         $("#activeStatus").prop("checked", true);
                         $('#submit_btn').text("Save");
-                        Notiflix.Notify.success(response.message);
+                        Swal.fire("Success!", response.message, "success");
                     } else {
-                        Notiflix.Notify.failure(response.message);
+                        Swal.fire("Error!", response.message, "error");
                     }
                 }
             });
@@ -546,9 +562,9 @@ $(document).ready(function () {
                         $('#city_id').val('');
                         $("#activeStatus").prop("checked", true);
                         $('#submit_btn').text("Save");
-                        Notiflix.Notify.success(response.message);
+                        Swal.fire("Success!", response.message, "success");
                     } else {
-                        Notiflix.Notify.failure(response.message);
+                        Swal.fire("Error!", response.message, "error");
                     }
                 }
             });
@@ -599,7 +615,7 @@ $(document).ready(function () {
                         $('#locality_id').val('');
                         $("#activeStatus").prop("checked", true);
                         $('#submit_btn').text("Save");
-                        Notiflix.Notify.success(response.message);
+                        Swal.fire("Success!", response.message, "success");
                     } else {
                         if (response.validation_error) {
                             var errors_list = response.message;
@@ -612,7 +628,7 @@ $(document).ready(function () {
                                 Notiflix.Notify.warning(errors_list.locality_id);
                             }
                         } else {
-                            Notiflix.Notify.failure(response.message);
+                            Swal.fire("Error!", response.message, "error");
                         }
                     }
                 }
@@ -743,7 +759,7 @@ $(document).ready(function () {
                 success: function (response) {
                     response = JSON.parse(response);
                     if (response.status) {
-                        Notiflix.Notify.success(response.message);
+                        Swal.fire("Success!", response.message, "success");
                         refreshAdd_pluginPage();                      
                     } else {
                         if (response.validation_error) {
@@ -756,7 +772,7 @@ $(document).ready(function () {
                             $('#address_error').text(response.message.address);
                             $('#website_domain_error').text(response.message.website_domain);
                         } else {
-                            Notiflix.Notify.failure(response.message);
+                            Swal.fire("Error!", response.message, "error");
                         }
 
                     }
@@ -835,9 +851,9 @@ $(document).ready(function () {
                 success: function (response) {
                     response = JSON.parse(response);                   
                     if (response.status) {                        
-                        Notiflix.Notify.success(response.message);
+                        Swal.fire("Success!", response.message, "success");
                     } else {
-                        Notiflix.Notify.failure(response.message);
+                        Swal.fire("Error!", response.message, "error");
                     }
                 }
             });
@@ -879,9 +895,9 @@ $(document).ready(function () {
                 success: function (response) {
                     response = JSON.parse(response);                 
                     if (response.status) {                        
-                        Notiflix.Notify.success(response.message);
+                        Swal.fire("Success!", response.message, "success");
                     } else {
-                        Notiflix.Notify.failure(response.message);
+                        Swal.fire("Error!", response.message, "error");
                     }
                 }
             });
@@ -965,9 +981,9 @@ $(document).ready(function () {
                 success: function (response) {
                     response = JSON.parse(response);                   
                     if (response.status) {                        
-                        Notiflix.Notify.success(response.message);
+                        Swal.fire("Success!", response.message, "success");
                     } else {
-                        Notiflix.Notify.failure(response.message);
+                        Swal.fire("Error!", response.message, "error");
                     }
                 }
             });
@@ -1000,9 +1016,9 @@ $(document).ready(function () {
                 success: function (response) {
                     response = JSON.parse(response);                   
                     if (response.status) {                        
-                        Notiflix.Notify.success(response.message);
+                        Swal.fire("Success!", response.message, "success");
                     } else {
-                        Notiflix.Notify.failure(response.message);
+                        Swal.fire("Error!", response.message, "error");
                     }
                 }
             });
@@ -1036,9 +1052,9 @@ $(document).ready(function () {
                         $('#purchaseInventory').val('');  
                         $('#total_amount').val('');  
                         updateInventoryTable();                       
-                        Notiflix.Notify.success(response.message);
+                        Swal.fire("Success!", response.message, "success");
                     } else {
-                        Notiflix.Notify.failure(response.message);
+                        Swal.fire("Error!", response.message, "error");
                     }
                 }
             });
@@ -1136,9 +1152,9 @@ function delete_stateFun(value) {
                     response = JSON.parse(data);
                     updateStateTable();
                     if (response.status) {
-                        Notiflix.Notify.success(response.message);
+                        Swal.fire("Success!", response.message, "success");
                     } else {
-                        Notiflix.Notify.failure(response.message);
+                        Swal.fire("Error!", response.message, "error");
                     }
                 }
             });
@@ -1216,9 +1232,9 @@ function delete_businessFun(value) {
                     response = JSON.parse(data);
                     updateBusinessTable();
                     if (response.status) {
-                        Notiflix.Notify.success(response.message);
+                        Swal.fire("Success!", response.message, "success");
                     } else {
-                        Notiflix.Notify.failure(response.message);
+                        Swal.fire("Error!", response.message, "error");
                     }
                 }
             });
@@ -1320,9 +1336,9 @@ function delete_CountryFun(value) {
                     response = JSON.parse(data);
                     updateCategoryTable();
                     if (response.status) {
-                        Notiflix.Notify.success(response.message);
+                        Swal.fire("Success!", response.message, "success");
                     } else {
-                        Notiflix.Notify.failure(response.message);
+                        Swal.fire("Error!", response.message, "error");
                     }
                 }
             });
@@ -1425,9 +1441,9 @@ function delete_cityFun(value) {
                     response = JSON.parse(data);
                     updatecityTable();
                     if (response.status) {
-                        Notiflix.Notify.success(response.message);
+                        Swal.fire("Success!", response.message, "success");
                     } else {
-                        Notiflix.Notify.failure(response.message);
+                        Swal.fire("Error!", response.message, "error");
                     }
                 }
             });
@@ -1531,9 +1547,9 @@ function delete_localityFun(value) {
                     response = JSON.parse(data);
                     updateLocalityTable();
                     if (response.status) {
-                        Notiflix.Notify.success(response.message);
+                        Swal.fire("Success!", response.message, "success");
                     } else {
-                        Notiflix.Notify.failure(response.message);
+                        Swal.fire("Error!", response.message, "error");
                     }
                 }
             });
@@ -1636,9 +1652,9 @@ function delete_pincodeFun(value) {
                     response = JSON.parse(data);
                     updatepincodeTable();
                     if (response.status) {
-                        Notiflix.Notify.success(response.message);
+                        Swal.fire("Success!", response.message, "success");
                     } else {
-                        Notiflix.Notify.failure(response.message);
+                        Swal.fire("Error!", response.message, "error");
                     }
                 }
             });

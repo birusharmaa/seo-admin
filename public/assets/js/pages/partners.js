@@ -513,4 +513,8 @@ function deletePartner(id=null, user_email=null){
     }
 }
 
+$('#addPartnerModal').on('hidden.bs.modal', function (e) {
+    $(".validation").remove();
+    $('#add-parter-form').trigger("reset");
+})
 

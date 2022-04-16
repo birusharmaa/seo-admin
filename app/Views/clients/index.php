@@ -71,7 +71,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> 
     <?= $this->include('partners/modal') ?>
 <?= $this->endSection();?>
 <?= $this->section('script');?>

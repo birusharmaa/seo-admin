@@ -63,9 +63,9 @@ function loadClientsData(result) {
                 
                 let logo = "";
                 if(e.company_logo){
-                    logo = `<a href="https://partners.thewingshield.com/public/uploads/parnters_company_logo/${e.company_logo}" target="_black"> <img src="https://partners.thewingshield.com/public/uploads/parnters_company_logo/${e.company_logo}" class="img-fluid" width="150"><a/>`;
+                    logo = `<a href="https://plugins.thewingshield.com/public/uploads/clients_company_logo/${e.company_logo}" target="_black"> <img src="https://plugins.thewingshield.com/public/uploads/clients_company_logo/${e.company_logo}" class="img-fluid" width="60"><a/>`;
                 }else{
-                    logo = `<a href="${BaseUrl}assets/img/empty.jpg" target="_black"><img src="${BaseUrl}assets/img/empty.jpg" class="img-fluid" width="150"><a/>`;
+                    logo = `<a href="${BaseUrl}assets/img/empty.jpg" target="_black"><img src="${BaseUrl}assets/img/empty.jpg" class="img-fluid" width="60"><a/>`;
                 }
                 
                 let websiteURL = "";
@@ -298,7 +298,7 @@ function display(input) {
 
 $('#addParterModal').on('hidden.bs.modal', function (e) {
     $("#add-parter-form").trigger('reset');
-})
+}) 
 
 function deletePartner(id=null, user_email=null){
     if(id && user_email){
@@ -313,17 +313,14 @@ function deletePartner(id=null, user_email=null){
             }).then((result) => {
             if (result.isConfirmed) {
                 $(".loader-wrapper").hide();
-                let url = "https://partners.thewingshield.com/partners/delete/"+id
+                let url = BaseUrl+"curl/delete-client/"+id;
                 $.ajax({
                     url:url,
                     type:"delete",
                     dataType: 'json',
-                    headers: {
-                        'email': emails,
-                        'password': pass
-                    },
                     success:function(data){
                         if(data.status){
+                            $(".loader-wrapper").hide();
                             Swal.fire("Success!", data.message, "success");
                             getClientLists();
                         }else{

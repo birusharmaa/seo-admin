@@ -81,15 +81,25 @@ class SettingsController extends BaseController
         
     }
 
-    public function updateSiteLogo($id)
-    {          
+    public function updateSiteLogo($id){ 
+
         $model = new Users_model();
+        $db = db_connect(); 
+        $sql = "select * from `seo_users` where id=".$id." ";
+        $result = $db->query($sql);            
+        $user = $result->getRow();
+        $old_file_name = $user->company_logo;
+        $oldfilelocation = "";
+        if(!empty($old_file_name)){
+            $oldfilelocation = 'assets/img/logo/'.$user->company_logo;
+        }
+       
         $file_name = rand() . $_FILES['company_logo']['name'];       
         $file = $this->request->getFile('company_logo');
         $file->move('./assets/img/logo', $file_name);
         $return = $model->uploadImage($id,$file_name); 
         if($return){
-            $db = db_connect();
+            $db = db_connect(); 
             $sql = "select * from `seo_users` where id=".$id." ";
             $result = $db->query($sql);            
         
@@ -107,9 +117,14 @@ class SettingsController extends BaseController
                 ];                 
                 $session->set('login_user', $newdata); 
             } 
-
-            $path = base_url().'/assets/img/logo/'.$file_name;
-            echo json_encode(['status'=> true, 'path'=>$path]);
+            if(!empty($old_file_name) && unlink($oldfilelocation)){
+                $path = base_url().'/assets/img/logo/'.$file_name;
+                echo json_encode(['status'=> true, 'path'=>$path]);
+            }else{
+                $path = base_url().'/assets/img/logo/'.$file_name;
+                echo json_encode(['status'=> true, 'path'=>$path]);
+            }
+            
         }else{
             return false;
         }  
