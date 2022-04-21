@@ -131,132 +131,131 @@
 			<!-- End Row -->
 		</div>
 		<?php include 'Layout/jsLinks.php'; ?>
-
 		<script>
-    $("#password-form").validate({
-        errorClass: "is-invalid",
-        errorElement: "span",
-        rules: {
-            email: {
-                required: true,
-                email: true,
-            },
-        },
-        messages: {
-            email: {
-                required: "Please enter your email address",
-                email: "Please enter a valid email address",
-            },
-        },
-        submitHandler: function(form) {
-            $("#MyForm").css({
-                padding: "10px"
-            });
-           
-            // $("#MyForm").css("padding", "10px");
-            $(".validation").remove();
-			$.ajax({
-				url: '<?php echo base_url('send-otp');?>',
-				type: "POST",
-				data: $('#password-form').serialize(),
-				success: function(response) {
-					response= JSON.parse(response);	
-					if(response.status){
-						$('#saved_id').val(response.saved_id);
-						$("#field").parent().append('<span class="validation text-danger">Your OTP sent successfully on register mobile '+response.mobile+'</span>')
-						$("#password-form").hide(500);
-						$("#MyForm").show(500);		
-					}else{
-						$("#email").parent().append('<span class="validation text-danger">'+response.message+'</span>');
+		    $("#password-form").validate({
+		        errorClass: "is-invalid",
+		        errorElement: "span",
+		        rules: {
+		            email: {
+		                required: true,
+		                email: true,
+		            },
+		        },
+		        messages: {
+		            email: {
+		                required: "Please enter your email address",
+		                email: "Please enter a valid email address",
+		            },
+		        },
+		        submitHandler: function(form) {
+		            $("#MyForm").css({
+		                padding: "10px"
+		            });
+		           
+		            // $("#MyForm").css("padding", "10px");
+		            $(".validation").remove();
+					$.ajax({
+						url: '<?php echo base_url('send-otp');?>',
+						type: "POST",
+						data: $('#password-form').serialize(),
+						success: function(response) {
+							response= JSON.parse(response);	
+							if(response.status){
+								$('#saved_id').val(response.saved_id);
+								$("#field").parent().append('<span class="validation text-danger">Your OTP sent successfully on register mobile '+response.mobile+'</span>')
+								$("#password-form").hide(500);
+								$("#MyForm").show(500);		
+							}else{
+								$("#email").parent().append('<span class="validation text-danger">'+response.message+'</span>');
 
-					}								
-				}            
-			});
-        },
-        //
-    });
+							}								
+						}            
+					});
+		        },
+		        //
+		    });
 
 
-    $(document).ready(function() {
-        $('#OTPfilled').on('click', function() {
-			$(".validation").remove();
-            const field = $('#field').val().length;
-			const otp = $('#field').val();
-			const saveid = $('#saved_id').val();
-            if (field === 6) {
-				$.ajax({
-					url: '<?php echo base_url('verify-otp');?>',
-					type: "POST",
-					data: {
-						otp:otp,
-						saveid:saveid
-					},
-					success: function(response) {
-						response= JSON.parse(response);
-						$("#validate_message").innerHTML= response.message;
-						if(response.success){
-							$("#user_email").val(response.data.email);
-							let val = $("#field").val();
-							$("#oldOtp").val(val);
-							
-							$("#exampleModal").modal('show');							
-						}else{
-							$("#field").parent().append('<span class="validation text-danger">'+response.message+'</span>')
-						}								
-					}            
-				});
+		    $(document).ready(function() {
+		        $('#OTPfilled').on('click', function() {
+					$(".validation").remove();
+		            const field = $('#field').val().length;
+					const otp = $('#field').val();
+					const saveid = $('#saved_id').val();
+		            if (field === 6) {
+						$.ajax({
+							url: '<?php echo base_url('verify-otp');?>',
+							type: "POST",
+							data: {
+								otp:otp,
+								saveid:saveid
+							},
+							success: function(response) {
+								response= JSON.parse(response);
+								$("#validate_message").innerHTML= response.message;
+								if(response.success){
+									$("#user_email").val(response.data.email);
+									let val = $("#field").val();
+									$("#oldOtp").val(val);
+									
+									$("#exampleModal").modal('show');							
+								}else{
+									$("#field").parent().append('<span class="validation text-danger">'+response.message+'</span>')
+								}								
+							}            
+						});
 
-            } else {
-                $("#field").parent().append('<span class="validation text-danger">Please enter valid OTP.</span>')
-            }
-        });
-    });
+		            } else {
+		                $("#field").parent().append('<span class="validation text-danger">Please enter valid OTP.</span>')
+		            }
+		        });
+		    });
 
-    $(document).ready(function() {
-        $("#Reset-Password").validate({
-            errorClass: "is-invalid",
-            errorElement: "span",
-            rules: {
-                password: {
-                    required: true,
-                    minlength: 6,
-                },
-                confirmPassword: {
-                    required: true,
-                    minlength: 6,
-                    equalTo: "#matchPassword",
-                },
-            },
-            messages: {
-                password: {
-                    required: "Please enter your password",
-                    minlength: "Your password must be at least 6 characters long",
-                },
-                confirmPassword: {
-                    required: "Please enter your password",
-                    minlength: "Your password must be at least 6 characters long",
-                    equalTo: "Password does not match",
-                },
-            },
-			submitHandler: function(form) {
+		    $(document).ready(function() {
+		        $("#Reset-Password").validate({
+		            errorClass: "is-invalid",
+		            errorElement: "span",
+		            rules: {
+		                password: {
+		                    required: true,
+		                    minlength: 6,
+		                },
+		                confirmPassword: {
+		                    required: true,
+		                    minlength: 6,
+		                    equalTo: "#matchPassword",
+		                },
+		            },
+		            messages: {
+		                password: {
+		                    required: "Please enter your password",
+		                    minlength: "Your password must be at least 6 characters long",
+		                },
+		                confirmPassword: {
+		                    required: "Please enter your password",
+		                    minlength: "Your password must be at least 6 characters long",
+		                    equalTo: "Password does not match",
+		                },
+		            },
+					submitHandler: function(form) {
 
-				$.ajax({
-					url: '<?php echo base_url('password-reset');?>',
-					type: "POST",
-					data: $('#Reset-Password').serialize(),
-					success: function(response) {
-						response= JSON.parse(response);
-						$("#validate_message").innerHTML= response.message;
-						if(response.success){
-							Notiflix.Notify.success("Your password reset successfully.");
-							window.location.href = '<?=base_url();?>';							
-						}								
-					}            
-				});
-			}
-        });
-		
-    });
+						$.ajax({
+							url: '<?php echo base_url('password-reset');?>',
+							type: "POST",
+							data: $('#Reset-Password').serialize(),
+							success: function(response) {
+								response= JSON.parse(response);
+								$("#validate_message").innerHTML= response.message;
+								if(response.success){
+									Notiflix.Notify.success("Your password reset successfully.");
+									window.location.href = '<?=base_url();?>';							
+								}								
+							}            
+						});
+					}
+		        });
+				
+		    });
     </script>
 </body>
 </html>

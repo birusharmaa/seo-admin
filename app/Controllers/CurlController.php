@@ -215,6 +215,8 @@ class CurlController extends Security_Controller
                         "googleplus"=> $_REQUEST['googleplus'], 
                         "linkedIn"=> $_REQUEST['linkedIn'], 
                         "partner_name"=> $_REQUEST['partner_name'], 
+                        "ekey"=> $_REQUEST['ekey'], 
+                        "ekeypass"=> $_REQUEST['ekeypass'], 
 
                         //"linkedIn"=> $_REQUEST['linkedIn']);
                         "companyLogo"=> $cfile );

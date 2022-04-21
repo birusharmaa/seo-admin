@@ -123,7 +123,9 @@
                         $session = \Config\Services::session();
                         ?>
                         <input type="hidden" name="partner_name" value="<?= $session->login_user['user_name'];?>" />
-                        
+                        <input type="hidden" name='ekey' value="<?php echo "e-THEWINGSHIELD".generateRandomNum(); ?>">
+                        <input type="hidden" name='ekeypass' value="<?php echo generateRandomString(); ?>">
+
                     </div>
                 </form>
             </div>
